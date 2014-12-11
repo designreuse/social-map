@@ -9,7 +9,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name="location")
-public class location implements java.io.Serializable {
+public class Location implements java.io.Serializable {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
