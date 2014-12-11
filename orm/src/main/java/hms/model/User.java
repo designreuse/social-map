@@ -21,14 +21,15 @@ import static javax.persistence.GenerationType.IDENTITY;
  * Created by ishara on 12/7/14.
  */
 @Entity
-@Table(name="user")
-public class User implements java.io.Serializable{
-    private Long id;
-    private String name;
-
+@Table(name = "user")
+public class User implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
+    private Long id;
+    @Column(name = "name")
+    private String name;
+
     public Long getId() {
         return id;
     }
@@ -37,7 +38,6 @@ public class User implements java.io.Serializable{
         this.id = id;
     }
 
-    @Column(name = "name")
     public String getName() {
         return name;
     }
