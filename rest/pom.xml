@@ -11,12 +11,6 @@
     <packaging>war</packaging>
     <artifactId>rest</artifactId>
 
-    <properties>
-        <spring.version>3.2.2.RELEASE</spring.version>
-        <jackson.version>1.9.10</jackson.version>
-        <jdk.version>1.6</jdk.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.hms</groupId>
@@ -56,7 +50,7 @@
                 <version>2.1.1</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <warName>bus</warName>
+                    <warName>social-map</warName>
                 </configuration>
             </plugin>
         </plugins>
