@@ -18,7 +18,6 @@ import hms.model.User;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -28,13 +27,13 @@ import java.util.List;
  * Created by ishara on 12/7/14.
  */
 @Repository("userDao")
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl extends UniversalDaoImpl implements UserDao{
     @Resource(name="sessionFactory")
     protected SessionFactory sessionFactory;
 
     @Override
     public List<User> findAll() {
-        Session session = sessionFactory.getCurrentSession();
+        Session session = getSession();
         List<User> result = session.createCriteria(User.class)
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
