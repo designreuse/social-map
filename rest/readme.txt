@@ -1,0 +1,1 @@
+goto browser and past "http://localhost:8080/bus/rest/request/process"

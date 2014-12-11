@@ -1,4 +1,4 @@
-/*   File Name - RequestControler
+package hms;/*   File Name - RequestControler
  *
  *   (C) Copyright 2013-2014 hSenid Software International (Pvt) Limited.
  *   All Rights Reserved.
@@ -42,9 +42,9 @@ public class RequestController {
         Map response = new HashMap();
         try {
             System.out.println("request proceed");
-            /*List<User> userList = userService.finAll();
+            List<User> userList = userService.finAll();
             System.out.println("user list:"+userList);
-            response.put("responseContext", userList);*/
+            response.put("responseContext", userList);
         } catch (Exception e) {
             response.put("responseContext", "Internal Error");
         }
