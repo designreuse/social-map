@@ -7,6 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import com.winter.codefest.SocialMap.R;
+import com.winter.codefest.SocialMap.model.Device;
+import com.winter.codefest.SocialMap.util.GPS;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Thilina on 12/12/2014.
@@ -37,7 +42,10 @@ public class AddDeviceActivity extends Activity {
     }
 
     private void btnRegisterOnClick() {
-        //TODO send request with code+deviceID
+        Map params = new HashMap();
+        params.put("deviceId", Device.getDeviceId());
+        params.put("code", etCode.getText().toString());
+        params.put("latitude", GPS.getGPSLocation(this).getAltitude());
 
     }
 }
