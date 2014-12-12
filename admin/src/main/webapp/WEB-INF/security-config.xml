@@ -16,6 +16,10 @@
                 password-parameter="password"
                 always-use-default-target="true"/>
 
+        <intercept-url pattern="/home/**" access="hasAnyRole('LOGIN')"/>
+        <intercept-url pattern="/vehicle/**" access="hasAnyRole('LOGIN')"/>
+        <intercept-url pattern="/vehiclegroup/**" access="hasAnyRole('LOGIN')"/>
+
         <logout logout-success-url="/login" delete-cookies="JSESSIONID"/>
         <session-management session-fixation-protection="newSession" invalid-session-url="/login" session-authentication-error-url="/login">
             <concurrency-control session-registry-alias="sessionRegistry" max-sessions="10"  error-if-maximum-exceeded="true"/>
