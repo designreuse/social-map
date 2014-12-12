@@ -12,7 +12,7 @@
 
         <div class="container">
 
-            <form class="form-signin" role="form" action="<c:url value='/j_spring_security_check' />" method='POST'>
+            <form class="form-signin well" role="form" action="<c:url value='/j_spring_security_check' />" method='POST'>
                     <h2 class="form-signin-heading">Welcome</h2>
 
                     <label for="input-username" class="sr-only">Username</label>
