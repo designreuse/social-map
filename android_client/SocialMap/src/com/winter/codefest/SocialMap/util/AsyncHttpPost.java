@@ -22,6 +22,7 @@ public abstract class AsyncHttpPost extends AsyncTask<Map<String, String>, Void,
 
     public AsyncHttpPost(Context context, String url) {
         this.context = context;
+        this.url = url;
     }
 
     @Override

@@ -61,6 +61,7 @@ public class HTTPRequest {
             ips.close();
             return sb.toString();
         }catch (Exception e){
+            Log.d(TAG, e.toString());
             return null;
         }
     }
