@@ -27,7 +27,7 @@
             </div>
         </c:if>
 
-        <form:form  class="form-horizontal" commandName='vehicleGroup' role="form" action="add" method="post">
+        <form:form class="form-horizontal" id="add-form" commandName='vehicleGroup' role="form" action="add" method="post">
 
             <div class="form-group">
                 <label for="input-name" class="col-sm-2 control-label">Name</label>
@@ -45,22 +45,24 @@
                 <label for="input-start" class="col-sm-2 control-label">Start</label>
                 <div class="col-sm-10">
                     <form:select class="form-control" id="input-start" path="startLocationId">
-                        <form:option value="0" label="--- Select ---"/>
+                        <form:option value="0" label=""/>
                         <c:forEach items="${locations}" var="loc" varStatus="status">
                             <option value="${loc.id}">${loc.name}</option>
                         </c:forEach>
                     </form:select>
+                    <span id="start-error" class="text-danger" hidden="true">Invalid location.</span>
                 </div>
             </div>
             <div class="form-group">
                 <label for="input-end" class="col-sm-2 control-label">End</label>
                 <div class="col-sm-10">
                     <form:select class="form-control" id="input-end" path="endLocationId">
-                        <form:option value="0" label="--- Select ---"/>
+                        <form:option value="0" label=""/>
                         <c:forEach items="${locations}" var="loc" varStatus="status">
                             <option value="${loc.id}">${loc.name}</option>
                         </c:forEach>
                     </form:select>
+                    <span id="end-error" class="text-danger" hidden="true">Invalid location.</span>
                 </div>
             </div>
 
@@ -75,14 +77,46 @@
     </jsp:attribute>
 
     <jsp:attribute name="js">
+
         <script type="text/javascript">
 
-            var start = $('#input-start')[0].val();
-            var end = $('#input-end')[0].val();
+            function validateLocation(location) {
+                var success = true;
 
-            if (start == end)
+                if ($('#input-' + location).val() == 0)
+                    success = false;
 
-        <script>
+                success = success && ($('#input-start').val() != $('#input-end').val());
+
+                var err = $('#' + location + '-error');
+                if (!success) {
+                    err.show();
+                }
+                else {
+                    err.hide();
+                }
+
+                return success;
+            }
+
+            $(document).ready(function() {
+
+                $('#input-start').on('change', function() {
+                    validateLocation('start');
+                });
+                $('#input-end').on('change', function() {
+                    validateLocation('end');
+                });
+
+                $('#add-form').submit(function(e) {
+                    if (!validateLocation('start') || !validateLocation('end')) {
+                        e.preventDefault();
+                        return false;
+                    }
+                });
+            });
+        </script>
+
     </jsp:attribute>
 
 </t:wrapper>
