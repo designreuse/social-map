@@ -47,8 +47,10 @@ public class VehicleServiceImpl implements VehicleService {
         logger.info("Request received to verify vehicle");
         Vehicle vehicle = vehicleDao.getVehicleByGroupAndCode(groupId, verificationCode, Vehicle.Status.ACTIVE);
         if(vehicle != null){
+            vehicle.setVehicleId(vehicleId);
+            boolean result = vehicleDao.update(vehicle);
             logger.info("Vehicle verified");
-            return true;
+            return result;
         }
             logger.info("Vehicle not verified");
         return false;
@@ -56,7 +58,17 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public boolean updateVehicleLocation(String vehicleId, BigDecimal longitude, BigDecimal latitude, Date time) {
-        return false;
+        logger.info("Request received update vehicle location");
+        Vehicle vehicle = vehicleDao.getVehicleById(vehicleId);
+        if(vehicle == null){
+            logger.error("Vehicle not registered {}", vehicleId);
+            return  false;
+        }
+        vehicle.setLongitude(longitude);
+        vehicle.setLongitude(latitude);
+        vehicle.setLastUpdatedTime(time);
+        logger.info("Location updated for vehicle {}", vehicleId);
+        return vehicleDao.update(vehicle);
     }
 
     @Override
