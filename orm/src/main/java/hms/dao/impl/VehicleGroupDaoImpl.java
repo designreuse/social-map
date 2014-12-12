@@ -17,7 +17,7 @@ import java.util.List;
 public class VehicleGroupDaoImpl extends UniversalDaoImpl implements VehicleGroupDao {
     @Override
     public boolean saveVehicleGroup(VehicleGroup vehicleGroup) {
-        return false;
+        return super.save(vehicleGroup);
     }
 
     @Override
