@@ -1,7 +1,8 @@
-package com.winter.codefest.socialmap;
+package com.winter.codefest.SocialMap.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import com.winter.codefest.SocialMap.R;
 
 public class MainActivity extends Activity {
     /**
