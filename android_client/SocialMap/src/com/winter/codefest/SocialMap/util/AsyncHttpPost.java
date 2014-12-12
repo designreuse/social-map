@@ -18,8 +18,9 @@ import java.util.Map;
 public abstract class AsyncHttpPost extends AsyncTask<Map<String, String>, Void, String> {
     private Context context;
     private static final String TAG = "AsyncHttpPost";
+    private String url;
 
-    public AsyncHttpPost(Context context) {
+    public AsyncHttpPost(Context context, String url) {
         this.context = context;
     }
 
@@ -27,7 +28,7 @@ public abstract class AsyncHttpPost extends AsyncTask<Map<String, String>, Void,
     protected String doInBackground(Map<String, String>... data) {
         Log.d(TAG, "start background async task ");
         try {
-            return HTTPRequest.post(context, context.getString(R.string.server_http_url), data[0]);
+            return HTTPRequest.post(context, url, data[0]);
         } catch (Exception e) {
             e.printStackTrace();
         }
