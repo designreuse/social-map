@@ -12,6 +12,7 @@
         <module>orm</module>
         <module>core</module>
         <module>rest</module>
+        <module>admin</module>
     </modules>
 
     <properties>
