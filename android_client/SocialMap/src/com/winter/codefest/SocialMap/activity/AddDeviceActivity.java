@@ -73,7 +73,7 @@ public class AddDeviceActivity extends Activity {
                                 Toast.LENGTH_LONG).show();
                     }
                 }
-            };
+            }.execute(new HashMap<String, String>());
         }else{
             Toast.makeText(context,
                     context.getString(R.string.err_connection_error),
@@ -107,7 +107,7 @@ public class AddDeviceActivity extends Activity {
                                 Toast.LENGTH_LONG).show();
                     }
                 }
-            };
+            }.execute(params);
         }else{
             Toast.makeText(context,
                     context.getString(R.string.err_connection_error),

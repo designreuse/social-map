@@ -13,5 +13,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.AddDeviceActivity"/>
+        <receiver android:name=".daemon.UpdateLocationBroadcastReceiver"/>
     </application>
 </manifest>
