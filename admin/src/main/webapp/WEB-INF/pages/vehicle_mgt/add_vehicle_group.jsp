@@ -45,6 +45,7 @@
                 <label for="input-start" class="col-sm-2 control-label">Start</label>
                 <div class="col-sm-10">
                     <form:select class="form-control" id="input-start" path="startLocationId">
+                        <form:option value="0" label="--- Select ---"/>
                         <c:forEach items="${locations}" var="loc" varStatus="status">
                             <option value="${loc.id}">${loc.name}</option>
                         </c:forEach>
@@ -55,6 +56,7 @@
                 <label for="input-end" class="col-sm-2 control-label">End</label>
                 <div class="col-sm-10">
                     <form:select class="form-control" id="input-end" path="endLocationId">
+                        <form:option value="0" label="--- Select ---"/>
                         <c:forEach items="${locations}" var="loc" varStatus="status">
                             <option value="${loc.id}">${loc.name}</option>
                         </c:forEach>
@@ -70,6 +72,17 @@
 
         </form:form>
 
+    </jsp:attribute>
+
+    <jsp:attribute name="js">
+        <script type="text/javascript">
+
+            var start = $('#input-start')[0].val();
+            var end = $('#input-end')[0].val();
+
+            if (start == end)
+
+        <script>
     </jsp:attribute>
 
 </t:wrapper>

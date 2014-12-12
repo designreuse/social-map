@@ -49,26 +49,26 @@ public class VehicleController {
         return "vehicle_mgt/add_vehicle";
     }
 
-//    @RequestMapping(value = "add", method = RequestMethod.POST)
-//    public String vehicleAddAction(@ModelAttribute("vehicleGroups") VehicleDto vehicleDto,
-//                                   final RedirectAttributes redirectAttributes) {
-//
-//        logger.info("add vehicle action {}", vehicleDto.getName());
-//
-////        Vehicle vehicle = new Vehicle();
-////        vehicle.setName(vehicleDto.getName());
-////        vehicle.setDetails(vehicleDto.getDetails());
-////        vehicle.setVehicleStatus(Vehicle.Status.PENDING);
-////        vehicle.setVehicleGroup(vehicleGroupService.(vehicleDto.getVehicleGroupId()));
-//
-////        vehicleService.addVehicle(vehicle);
-//
-////        if (vehicle != null) { // saved
-////            // show code
-////        } else {
-////            // show error
-////        }
-//
-//        return "redirect:add";
-//    }
+    @RequestMapping(value = "add", method = RequestMethod.POST)
+    public String vehicleAddAction(@ModelAttribute("vehicleGroups") VehicleDto vehicleDto,
+                                   final RedirectAttributes redirectAttributes) {
+
+        logger.info("add vehicle action {}", vehicleDto.getName());
+
+//        Vehicle vehicle = new Vehicle();
+//        vehicle.setName(vehicleDto.getName());
+//        vehicle.setDetails(vehicleDto.getDetails());
+//        vehicle.setVehicleStatus(Vehicle.Status.PENDING);
+//        vehicle.setVehicleGroup(vehicleGroupService.(vehicleDto.getVehicleGroupId()));
+
+//        vehicleService.addVehicle(vehicle);
+
+//        if (vehicle != null) { // saved
+//            // show code
+//        } else {
+//            // show error
+//        }
+
+        return "redirect:add";
+    }
 }
