@@ -11,6 +11,22 @@
 
     <jsp:attribute name="page_body">
 
+        <c:if test="${vehicleAddSuccess == false}">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <strong>Error!</strong> Could not save vehicle. Try again.
+            </div>
+        </c:if>
+
+        <c:if test="${vehicleAddSuccess == true}">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <strong>Success</strong> Vehicle saved.
+            </div>
+        </c:if>
+
         <form:form  class="form-horizontal" commandName="vehicle" role="form" action="add" method="post">
 
             <div class="form-group">

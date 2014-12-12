@@ -13,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -38,14 +39,8 @@ public class VehicleController {
         logger.info("add vehicle view");
 
         List<VehicleGroup> vehicleGroups = vehicleGroupService.getAllGroups();
-        for (VehicleGroup vehicleGroup : vehicleGroups) {
-            logger.info("{} {} ", vehicleGroup.getName());
-        }
-
-//        modelMap.addAttribute("vehicle", new VehicleDto());
-//        modelMap.addAttribute("vehicleGroups", vehicleGroups);
-
-        logger.info("add vehicle 5555");
+        modelMap.addAttribute("vehicle", new VehicleDto());
+        modelMap.addAttribute("vehicleGroups", vehicleGroups);
         return "vehicle_mgt/add_vehicle";
     }
 
@@ -55,20 +50,40 @@ public class VehicleController {
 
         logger.info("add vehicle action {}", vehicleDto.getName());
 
-//        Vehicle vehicle = new Vehicle();
-//        vehicle.setName(vehicleDto.getName());
-//        vehicle.setDetails(vehicleDto.getDetails());
-//        vehicle.setVehicleStatus(Vehicle.Status.PENDING);
-//        vehicle.setVehicleGroup(vehicleGroupService.(vehicleDto.getVehicleGroupId()));
+        VehicleGroup vehicleGroup = vehicleGroupService.findVehicleGroupById(vehicleDto.getVehicleGroupId());
+        if (vehicleGroup == null) {
+            redirectAttributes.addFlashAttribute("vehicleAddSuccess", false);
+            return "redirect:add";
+        }
 
-//        vehicleService.addVehicle(vehicle);
+        Vehicle vehicle = new Vehicle();
+        vehicle.setName(vehicleDto.getName());
+        vehicle.setDetails(vehicleDto.getDetails());
+        vehicle.setVehicleStatus(Vehicle.Status.PENDING);
+        vehicle.setVehicleGroup(vehicleGroup);
 
-//        if (vehicle != null) { // saved
-//            // show code
-//        } else {
-//            // show error
-//        }
+        vehicleService.addVehicle(vehicle);
 
-        return "redirect:add";
+        if (vehicle != null) { // saved
+            redirectAttributes.addAttribute("vehicle_group_id", vehicle.getVehicleGroup().getId());
+            redirectAttributes.addAttribute("authentication_code", vehicle.getAuthenticationCode());
+            return "redirect:authcode";
+        } else {
+            logger.info("error in add vehicle action");
+            redirectAttributes.addFlashAttribute("vehicleAddSuccess", false);
+            return "redirect:add";
+        }
+    }
+
+    @RequestMapping(value = "authcode", method = RequestMethod.GET)
+    public String vehicleAuthCodeView(@RequestParam("vehicle_group_id") Long vehicleGroupId,
+                                      @RequestParam("authentication_code") String authenticationCode,
+                                      ModelMap modelMap) {
+//        logger.info("vehicle authcode {} {}", vehicleGroupId, authenticationCode);
+        logger.info("auth view");
+
+        modelMap.addAttribute("vehicleGroupId", vehicleGroupId);
+        modelMap.addAttribute("authenticationCode", authenticationCode);
+        return "vehicle_mgt/auth_code";
     }
 }
