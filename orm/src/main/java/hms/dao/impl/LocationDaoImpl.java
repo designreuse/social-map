@@ -5,6 +5,7 @@ import hms.dao.UniversalDao;
 import hms.model.Location;
 import net.sf.ehcache.search.expression.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 import java.util.List;
 
@@ -20,5 +21,14 @@ public class LocationDaoImpl extends UniversalDaoImpl implements LocationDao {
                 .list();
         return result;
 
+    }
+
+    @Override
+    public Location findLocationById(Long locationId) {
+        Session session = getSession();
+        Location result = (Location) session.createCriteria(Location.class)
+                .add(Restrictions.eq("id", locationId))
+                .uniqueResult();
+        return result;
     }
 }
