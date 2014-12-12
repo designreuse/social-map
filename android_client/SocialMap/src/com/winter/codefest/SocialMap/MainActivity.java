@@ -1,4 +1,4 @@
-package com.winter.codefest.SocialMap;
+package com.winter.codefest.socialmap;
 
 import android.app.Activity;
 import android.os.Bundle;
