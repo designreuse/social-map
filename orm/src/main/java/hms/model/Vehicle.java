@@ -30,6 +30,15 @@ public class Vehicle implements java.io.Serializable{
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "vehicleId")
+    private String vehicleId;
+
+    @Column(name = "authenticationCode")
+    private String authenticationCode;
+
+    @Column(name = "vehicleStatus")
+    private String vehicleStatus;
+
     @Column(name = "name")
     private String name;
 
@@ -85,5 +94,29 @@ public class Vehicle implements java.io.Serializable{
     }
     public void setVehicleGroup(VehicleGroup vehicleGroup) {
         this.vehicleGroup = vehicleGroup;
+    }
+
+    public String getVehicleId() {
+        return vehicleId;
+    }
+
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId;
+    }
+
+    public String getAuthenticationCode() {
+        return authenticationCode;
+    }
+
+    public void setAuthenticationCode(String authenticationCode) {
+        this.authenticationCode = authenticationCode;
+    }
+
+    public String getVehicleStatus() {
+        return vehicleStatus;
+    }
+
+    public void setVehicleStatus(String vehicleStatus) {
+        this.vehicleStatus = vehicleStatus;
     }
 }
