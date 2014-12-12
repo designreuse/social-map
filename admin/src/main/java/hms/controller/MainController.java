@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class MainController {
 
-    @RequestMapping("home")
+    @RequestMapping(value = {"/", "home"})
     public String home() {
         return "home";
     }
