@@ -35,13 +35,13 @@ public class Vehicle implements java.io.Serializable{
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "vehicleId")
+    @Column(name = "vehicle_id")
     private String vehicleId;
 
-    @Column(name = "authenticationCode")
+    @Column(name = "authentication_code")
     private String authenticationCode;
 
-    @Column(name = "vehicleStatus")
+    @Column(name = "vehicle_status")
     @Enumerated(EnumType.STRING)
     private Status vehicleStatus;
 
