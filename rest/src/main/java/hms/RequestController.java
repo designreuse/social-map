@@ -12,6 +12,7 @@ package hms;/*   File Name - RequestControler
  *
  */
 
+import hms.model.Vehicle;
 import hms.model.VehicleGroup;
 import hms.service.UserService;
 import hms.service.VehicleGroupService;
@@ -107,6 +108,7 @@ public class RequestController {
             response.put("responseContext", vehicleGroups);
         } catch (Exception e) {
             response.put("responseContext", ResponseStatus.FAIL);
+            logger.error("Error occurred while retrieving groups", e);
         }
         return response;
     }
@@ -118,10 +120,14 @@ public class RequestController {
         Map response = new HashMap();
         try {
             logger.info("Locate vehicles: {}", request);
-
-            response.put("responseContext", vehicleService.getActiveVehiclesByGroup(Long.parseLong(request.get("group-id").toString())));
+            List<Vehicle> vehicleList = vehicleService.getActiveVehiclesByGroup(Long.parseLong(request.get("group-id").toString()));
+            for (Vehicle vehicle : vehicleList){
+                vehicle.setVehicleGroup(null);
+            }
+            response.put("responseContext", vehicleList);
         } catch (Exception e) {
-            response.put("responseContext", "Internal Error");
+            response.put("responseContext", ResponseStatus.FAIL);
+            logger.error("Error occurred while retrieving vehicles", e);
         }
         return response;
     }
