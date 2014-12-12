@@ -10,13 +10,13 @@
     <http auto-config="true" create-session="ifRequired" use-expressions="true">
         <form-login
                 login-page="/login"
-                default-target-url="/home"
+                default-target-url="/"
                 authentication-failure-url="/login?error"
                 username-parameter="username"
                 password-parameter="password"
                 always-use-default-target="true"/>
 
-        <intercept-url pattern="/home/**" access="hasAnyRole('LOGIN')"/>
+        <intercept-url pattern="/" access="hasAnyRole('LOGIN')"/>
         <intercept-url pattern="/vehicle/**" access="hasAnyRole('LOGIN')"/>
         <intercept-url pattern="/vehiclegroup/**" access="hasAnyRole('LOGIN')"/>
 
