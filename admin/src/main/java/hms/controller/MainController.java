@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * Created by sadika on 2014-12-12.
  */
 @Controller
-@RequestMapping("home")
 public class MainController {
 
-    @RequestMapping("view")
+    @RequestMapping("home")
     public String home() {
         return "home";
     }
