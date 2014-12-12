@@ -102,6 +102,8 @@ public class RequestController {
             List<VehicleGroup> vehicleGroups = vehicleGroupService.getAllGroups();
             for (VehicleGroup vehicleGroup : vehicleGroups) {
                 vehicleGroup.setVehicles(null);
+                vehicleGroup.setStart(null);
+                vehicleGroup.setEnd(null);
             }
             response.put("responseContext", vehicleGroups);
         } catch (Exception e) {
