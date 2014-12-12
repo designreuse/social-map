@@ -22,7 +22,7 @@ public class VehicleGroupServiceImpl implements VehicleGroupService {
 
     @Override
     public boolean addVehicleGroup(VehicleGroup vehicleGroup) {
-        return false;
+        return vehicleGroupDao.saveVehicleGroup(vehicleGroup);
     }
 
     @Override

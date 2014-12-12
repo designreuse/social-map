@@ -19,10 +19,10 @@ public class Location implements java.io.Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "longitude")
+    @Column(name = "longitude", precision = 30, scale = 20)
     private BigDecimal longitude;
 
-    @Column(name = "latitude")
+    @Column(name = "latitude", precision = 30, scale = 20)
     private BigDecimal latitude;
 
     public Long getId() {

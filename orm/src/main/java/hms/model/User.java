@@ -29,6 +29,16 @@ public class User implements java.io.Serializable {
     private Long id;
     @Column(name = "name")
     private String name;
+    @Column(name = "password")
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public Long getId() {
         return id;
