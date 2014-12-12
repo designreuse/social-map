@@ -4,6 +4,7 @@ import hms.model.Vehicle;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by sadupa on 12/12/14.
@@ -13,5 +14,5 @@ public interface VehicleService {
     Vehicle getVehicleById(String vehicleId);
     boolean VerifyVehicle(Long groupId, String vehicleId, String verificationCode);
     boolean updateVehicleLocation(String vehicleId, BigDecimal longitude, BigDecimal latitude, Date time);
-    boolean getVehiclesByGroup(Long groupId);
+    List<Vehicle> getActiveVehiclesByGroup(Long groupId);
 }
