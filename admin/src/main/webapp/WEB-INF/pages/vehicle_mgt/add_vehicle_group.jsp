@@ -3,57 +3,86 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<t:wrapper_basic>
+<t:wrapper>
+
+    <jsp:attribute name="page_heading">
+        Add Vehicle Group
+    </jsp:attribute>
 
     <jsp:attribute name="page_body">
 
-        <div class="container">
+        <c:if test="${vehicleGroupAddSuccess == false}">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <strong>Error!</strong> Could not save vehicle group. Try again.
+            </div>
+        </c:if>
 
-            <form:form  class="form-horizontal" commandName='vehicleGroup' role="form" action="add" method="post">
+        <c:if test="${vehicleGroupAddSuccess == true}">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <strong>Success</strong> Vehicle group saved.
+            </div>
+        </c:if>
 
-                <div class="form-group">
-                    <label for="input-name" class="col-sm-2 control-label">Name</label>
-                    <div class="col-sm-10">
-                        <form:input type="text" class="form-control" id="input-name" path="name" placeholder="Name"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="input-details" class="col-sm-2 control-label">Details</label>
-                    <div class="col-sm-10">
-                        <form:textarea class="form-control" id="input-details" path="details" placeholder="Details" rows="3"></form:textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="input-start" class="col-sm-2 control-label">Start</label>
-                    <div class="col-sm-10">
-                        <form:select class="form-control" id="input-start" path="startLocationId">
-                            <c:forEach items="${locations}" var="loc" varStatus="status">
-                                <option value="${loc.id}">${loc.name}</option>
-                            </c:forEach>
-                        </form:select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="input-end" class="col-sm-2 control-label">End</label>
-                    <div class="col-sm-10">
-                        <form:select class="form-control" id="input-end" path="endLocationId">
-                            <c:forEach items="${locations}" var="loc" varStatus="status">
-                                <option value="${loc.id}">${loc.name}</option>
-                            </c:forEach>
-                        </form:select>
-                    </div>
-                </div>
+        <form:form  class="form-horizontal" commandName='vehicleGroup' role="form" action="add" method="post">
 
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary btn-default">Add</button>
-                    </div>
+            <div class="form-group">
+                <label for="input-name" class="col-sm-2 control-label">Name</label>
+                <div class="col-sm-10">
+                    <form:input type="text" class="form-control" id="input-name" path="name" placeholder="Name" required="true"/>
                 </div>
+            </div>
+            <div class="form-group">
+                <label for="input-details" class="col-sm-2 control-label">Details</label>
+                <div class="col-sm-10">
+                    <form:textarea class="form-control" id="input-details" path="details" placeholder="Details" rows="3" required="true"></form:textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input-start" class="col-sm-2 control-label">Start</label>
+                <div class="col-sm-10">
+                    <form:select class="form-control" id="input-start" path="startLocationId">
+                        <form:option value="0" label="--- Select ---"/>
+                        <c:forEach items="${locations}" var="loc" varStatus="status">
+                            <option value="${loc.id}">${loc.name}</option>
+                        </c:forEach>
+                    </form:select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input-end" class="col-sm-2 control-label">End</label>
+                <div class="col-sm-10">
+                    <form:select class="form-control" id="input-end" path="endLocationId">
+                        <form:option value="0" label="--- Select ---"/>
+                        <c:forEach items="${locations}" var="loc" varStatus="status">
+                            <option value="${loc.id}">${loc.name}</option>
+                        </c:forEach>
+                    </form:select>
+                </div>
+            </div>
 
-            </form:form>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary btn-default">Add</button>
+                </div>
+            </div>
 
-        </div> <!-- /container -->
+        </form:form>
 
     </jsp:attribute>
 
-</t:wrapper_basic>
+    <jsp:attribute name="js">
+        <script type="text/javascript">
+
+            var start = $('#input-start')[0].val();
+            var end = $('#input-end')[0].val();
+
+            if (start == end)
+
+        <script>
+    </jsp:attribute>
+
+</t:wrapper>

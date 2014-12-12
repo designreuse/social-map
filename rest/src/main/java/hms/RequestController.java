@@ -16,6 +16,7 @@ import hms.model.Vehicle;
 import hms.model.VehicleGroup;
 import hms.service.UserService;
 import hms.service.VehicleGroupService;
+import hms.service.VehicleService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,21 +41,30 @@ public class RequestController {
     private UserService userService;
     @Autowired
     private VehicleGroupService vehicleGroupService;
+    @Autowired
+    private VehicleService vehicleService;
 
     final static Logger logger = LogManager.getLogger(RequestController.class);
 
     @RequestMapping(value = "/vehicle/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public
     @ResponseBody
-    Map<String, Object> getRegisterMerchant(@RequestBody Map<String, Object> request) {
-        Map response = new HashMap();
+    Map<String, Object> registerVehicle(@RequestBody Map<String, Object> request) {
+        Map<String, Object> response = new HashMap<String, Object>();
         try {
-            System.out.println("register merchant: " + request);
             logger.info("Register vehicle: {}", request);
-            //todo process the request
-            response.put("responseContext", "Vehicle registration success");
+            boolean isVerified = vehicleService.VerifyVehicle(Long.parseLong(request.get("group-id").toString()), request.get("vehicle-id").toString(), request.get("code").toString());
+
+            if(isVerified) {
+                response.put("responseContext", ResponseStatus.SUCCESS);
+            }
+            else {
+                response.put("responseContext", ResponseStatus.FAIL);
+
+            }
         } catch (Exception e) {
-            response.put("responseContext", "Internal Error");
+            response.put("responseContext", ResponseStatus.ERROR);
+            logger.error("Error occurred in vehicle verification", e);
         }
         return response;
     }
@@ -65,7 +75,7 @@ public class RequestController {
     Map<String, Object> currentLocation(@RequestBody Map<String, Object> request) {
         Map response = new HashMap();
         try {
-            System.out.println("current vehicle location: " + request);
+            logger.info("Current vehicle location: {}", request);
             //todo process the request
             response.put("responseContext", "Vehicle current location updated");
         } catch (Exception e) {
@@ -80,7 +90,7 @@ public class RequestController {
     Map<String, Object> searchGroup(@RequestBody Map<String, Object> request) {
         Map response = new HashMap();
         try {
-            System.out.println("get all groups" + request);
+            logger.info("Get all groups: {}", request);
             List<VehicleGroup> vehicleGroups = vehicleGroupService.getAllGroups();
             for (VehicleGroup vehicleGroup : vehicleGroups) {
                 vehicleGroup.setVehicles(null);
@@ -99,7 +109,7 @@ public class RequestController {
     Map<String, Object> locateVehicle(@RequestBody Map<String, Object> request) {
         Map response = new HashMap();
         try {
-            System.out.println("locate vehicle" + request);
+            logger.info("Locate vehicle: {}", request);
             //todo process the request
             Vehicle vehicle = new Vehicle();
             response.put("responseContext", vehicle);
