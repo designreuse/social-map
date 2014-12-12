@@ -58,6 +58,7 @@ public class VehicleGroupController {
         boolean success = vehicleGroupService.addVehicleGroup(vehicleGroup);
         logger.info("saving vehicle group success: {}", success);
 
+        redirectAttributes.addFlashAttribute("vehicleGroupAddSuccess", success);
         return "redirect:add";
     }
 }

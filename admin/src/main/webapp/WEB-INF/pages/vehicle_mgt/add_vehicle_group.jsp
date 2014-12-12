@@ -11,18 +11,34 @@
 
     <jsp:attribute name="page_body">
 
+        <c:if test="${vehicleGroupAddSuccess == false}">
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <strong>Error!</strong> Could not save vehicle group. Try again.
+            </div>
+        </c:if>
+
+        <c:if test="${vehicleGroupAddSuccess == true}">
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <strong>Success</strong> Vehicle group saved.
+            </div>
+        </c:if>
+
         <form:form  class="form-horizontal" commandName='vehicleGroup' role="form" action="add" method="post">
 
             <div class="form-group">
                 <label for="input-name" class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
-                    <form:input type="text" class="form-control" id="input-name" path="name" placeholder="Name"/>
+                    <form:input type="text" class="form-control" id="input-name" path="name" placeholder="Name" required="true"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="input-details" class="col-sm-2 control-label">Details</label>
                 <div class="col-sm-10">
-                    <form:textarea class="form-control" id="input-details" path="details" placeholder="Details" rows="3"></form:textarea>
+                    <form:textarea class="form-control" id="input-details" path="details" placeholder="Details" rows="3" required="true"></form:textarea>
                 </div>
             </div>
             <div class="form-group">
