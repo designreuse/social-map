@@ -14,8 +14,8 @@
 package hms.model;
 
 import javax.persistence.*;
-
 import java.math.BigDecimal;
+import java.util.Date;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -57,6 +57,9 @@ public class Vehicle implements java.io.Serializable{
 
     @Column(name = "latitude")
     private BigDecimal latitude;
+
+    @Column(name = "last_updated_time")
+    private Date lastUpdatedTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private VehicleGroup vehicleGroup;
@@ -121,6 +124,14 @@ public class Vehicle implements java.io.Serializable{
 
     public Status getVehicleStatus() {
         return vehicleStatus;
+    }
+
+    public Date getLastUpdatedTime() {
+        return lastUpdatedTime;
+    }
+
+    public void setLastUpdatedTime(Date lastUpdatedTime) {
+        this.lastUpdatedTime = lastUpdatedTime;
     }
 
     public void setVehicleStatus(Status vehicleStatus) {

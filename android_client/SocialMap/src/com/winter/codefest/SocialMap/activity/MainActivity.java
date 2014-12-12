@@ -16,8 +16,11 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.winter.codefest.SocialMap.R;
 import com.winter.codefest.SocialMap.util.HTTPRequest;
 
@@ -38,6 +41,22 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+
+        setGoogleMap(null);
+
+        Button btnSearch = (Button) findViewById(R.id.btnSearch);
+
+        btnSearch.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                loadGroups();
+            }
+        });
+
+    }
+
+    private void setGoogleMap(List<Map> mapList){
         try {
             if (googleMap == null) {
                 googleMap = ((MapFragment) getFragmentManager().
@@ -55,6 +74,15 @@ public class MainActivity extends Activity {
                     CameraUpdateFactory.newCameraPosition(camPos);
 
             googleMap.animateCamera(camUpd3);
+            if (mapList != null){
+                for (int i = 0; i < mapList.size(); i++){
+                    LatLng latLng = new LatLng(Double.valueOf((String) mapList.get(i).get("latitude")), Double.valueOf((String) mapList.get(i).get("longitude")));
+                    googleMap.animateCamera(CameraUpdateFactory.zoomTo(10.0f));
+            Marker TP = googleMap.addMarker(new MarkerOptions().
+                    position(latLng).title((String) mapList.get(i).get("details")));
+                    TP.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
+                }
+            }
 //            googleMap.animateCamera(CameraUpdateFactory.zoomTo(10.0f));
 //            Marker TP = googleMap.addMarker(new MarkerOptions().
 //                    position(hms).title("hms"));
@@ -62,17 +90,6 @@ public class MainActivity extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        Button btnSearch = (Button) findViewById(R.id.btnSearch);
-
-        btnSearch.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View v)
-            {
-                loadGroups();
-            }
-        });
-
     }
 
     @Override
@@ -130,6 +147,19 @@ public class MainActivity extends Activity {
 //        }
     }
 
+    private void loadVehicles(){
+        String result = tempVehicles();
+        try {
+            Map<String, Object> response = HTTPRequest.prepareResult(result);
+            if(response!=null){
+                List<Map> list = (List<Map>) response.get("vehicles");
+                setGoogleMap(list);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String tempGroupList(){
         return "{\"groups\":\n" +
                 "\t\t\t\t[\n" +
@@ -138,6 +168,16 @@ public class MainActivity extends Activity {
                 "\t\t\t\t\t{ \"id\": \"1003\", \"name\": \"C-N\" },\n" +
                 "\t\t\t\t\t{ \"id\": \"1004\", \"name\": \"K-J\" }\n" +
                 "\t\t\t\t]}";
+    }
+
+    public String tempVehicles(){
+        return "{\n" +
+                "\t\t\t\"vehicles\":\n" +
+                "\t\t\t\t[\n" +
+                "\t\t\t\t\t{ \"id\": \"1001\", \"name\": \"Regular\", \"details\": \"1001\", \"latitude\": \"6.952852\",\"longitude\": \"79.921608\" },\n" +
+                "\t\t\t\t\t{ \"id\": \"1001\", \"name\": \"Regular\", \"details\": \"1001\", \"latitude\": \"7.324173\",\"longitude\": \"80.396424\" }\n" +
+                "\t\t\t\t]\n" +
+                "\t\t}";
     }
 
     private void showGroups(String result) {
@@ -163,7 +203,6 @@ public class MainActivity extends Activity {
         //Initialize the Alert Dialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //Source of the data in the DIalog
-                CharSequence[] array = {"Kandy-Colombo", "Colombo-Galle", "Colombo-Negambp"};
         String[] arr = new String[list.size()];
         for (int i=0;i<list.size();i++){
             arr[i] = (String)list.get(i).get("name");
@@ -189,8 +228,9 @@ public class MainActivity extends Activity {
                             public void onClick(DialogInterface dialog, int id) {
                                 // User clicked OK, so save the result somewhere
                                 // or return them to the component that opened the dialog
-
+                                //TODO send this id to server
                                 System.out.println("=========="+ids.get(x[0]));
+                                loadVehicles();
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
