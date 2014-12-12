@@ -24,10 +24,6 @@
         </property>
     </bean>
 
-    <bean class="org.springframework.context.support.ResourceBundleMessageSource" id="messageSource">
-        <property name="basename" value="messages"/>
-    </bean>
-
     <bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="location" value="classpath:system-config.properties"/>
     </bean>
