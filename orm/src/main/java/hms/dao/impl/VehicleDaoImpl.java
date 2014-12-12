@@ -21,9 +21,10 @@ public class VehicleDaoImpl extends UniversalDaoImpl implements VehicleDao {
     }
 
     @Override
-    public Vehicle getVehicleByCodeAndStatus(String code, Vehicle.Status status) {
+    public Vehicle getVehicleByGroupAndCode(Long groupId, String code, Vehicle.Status status) {
         Session session = getSession();
         Vehicle result = (Vehicle) session.createCriteria(Vehicle.class)
+                .add(Restrictions.eq("vehicleGroup.id", groupId))
                 .add(Restrictions.eq("authenticationCode", code))
                 .add(Restrictions.eq("vehicleStatus", status))
                 .uniqueResult();

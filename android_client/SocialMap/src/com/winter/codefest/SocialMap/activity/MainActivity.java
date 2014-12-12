@@ -1,11 +1,16 @@
 package com.winter.codefest.SocialMap.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -14,6 +19,13 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.winter.codefest.SocialMap.R;
+import com.winter.codefest.SocialMap.util.HTTPRequest;
+
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity extends Activity {
@@ -51,6 +63,16 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         }
 
+        Button btnSearch = (Button) findViewById(R.id.btnSearch);
+
+        btnSearch.setOnClickListener(new View.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                loadGroups();
+            }
+        });
+
     }
 
     @Override
@@ -78,6 +100,113 @@ public class MainActivity extends Activity {
     private void startRegisteractivity(){
         Intent intent = new Intent(this, AddDeviceActivity.class);
         startActivity(intent);
+    }
+
+    private void loadGroups() {
+//        if(CheckNetwork.isInternetAvailable(this)){
+//            new AsyncHttpPost(this, getString(R.string.server_base_url) + getString(R.string.path_get_groups)) {
+//                LoadingDialog loadingDialog = new LoadingDialog(MainActivity.this);
+//                @Override
+//                protected void onPreExecute() {
+//                    loadingDialog.show();
+//                }
+//
+//                @Override
+//                public void onPostExecute(String result) {
+//                    loadingDialog.dismiss();
+//                    if(result!=null){
+                        showGroups(tempGroupList());
+//                    }else{
+//                        Toast.makeText(MainActivity.this,
+//                                MainActivity.this.getString(R.string.err_connection_error),
+//                                Toast.LENGTH_LONG).show();
+//                    }
+//                }
+//            }.execute(new HashMap<String, String>());
+//        }else{
+//            Toast.makeText(MainActivity.this,
+//                    MainActivity.this.getString(R.string.err_connection_error),
+//                    Toast.LENGTH_LONG).show();
+//        }
+    }
+
+    public String tempGroupList(){
+        return "{\"groups\":\n" +
+                "\t\t\t\t[\n" +
+                "\t\t\t\t\t{ \"id\": \"1001\", \"name\": \"C-K\" },\n" +
+                "\t\t\t\t\t{ \"id\": \"1002\", \"name\": \"C-G\" },\n" +
+                "\t\t\t\t\t{ \"id\": \"1003\", \"name\": \"C-N\" },\n" +
+                "\t\t\t\t\t{ \"id\": \"1004\", \"name\": \"K-J\" }\n" +
+                "\t\t\t\t]}";
+    }
+
+    private void showGroups(String result) {
+        try {
+            Map<String, Object> response = HTTPRequest.prepareResult(result);
+            if(response!=null){
+                List<Map> list = (List<Map>) response.get("groups");
+//                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
+//                        android.R.layout.simple_spinner_item, list);
+//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//                spGroups.setAdapter(adapter);
+                Dialog dialog = onCreateDialogSingleChoice(list);
+                dialog.show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Dialog onCreateDialogSingleChoice(List<Map> list) {
+        final int[] x = new int[1];
+        final List<String> ids = new ArrayList<String>();
+        //Initialize the Alert Dialog
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        //Source of the data in the DIalog
+                CharSequence[] array = {"Kandy-Colombo", "Colombo-Galle", "Colombo-Negambp"};
+        String[] arr = new String[list.size()];
+        for (int i=0;i<list.size();i++){
+            arr[i] = (String)list.get(i).get("name");
+            ids.add((String) list.get(i).get("id"));
+        }
+        // Set the dialog title
+                builder.setTitle("Select Route")
+        // Specify the list array, the items to be selected by default (null for none),
+        // and the listener through which to receive callbacks when items are selected
+
+                        .setSingleChoiceItems(arr, 1, new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                // TODO Auto-generated method stub
+                                x[0] =which;
+                            }
+                        })
+
+        // Set the action buttons
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User clicked OK, so save the result somewhere
+                                // or return them to the component that opened the dialog
+
+                                System.out.println("=========="+ids.get(x[0]));
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+
+                            }
+                        });
+
+                return builder.create();
+    }
+
+    private List<String> getGroupList(Map<String, Object> response) {
+        List<String> groups = new ArrayList<String>();
+        //TODO make the list
+        return groups;
     }
 
 }

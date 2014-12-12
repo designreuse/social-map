@@ -3,6 +3,8 @@ package hms.service.impl;
 import hms.dao.VehicleDao;
 import hms.model.Vehicle;
 import hms.service.VehicleService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,8 @@ import java.util.Random;
 public class VehicleServiceImpl implements VehicleService {
     @Autowired
     VehicleDao vehicleDao;
+
+    final static Logger logger = LogManager.getLogger(VehicleService.class);
 
     @Override
     public Vehicle addVehicle(Vehicle vehicle) {
@@ -39,7 +43,14 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public boolean VerifyVehicle(String vehicleId, String verificationCode) {
+    public boolean VerifyVehicle(Long groupId, String vehicleId, String verificationCode) {
+        logger.info("Request received to verify vehicle");
+        Vehicle vehicle = vehicleDao.getVehicleByGroupAndCode(groupId, verificationCode, Vehicle.Status.ACTIVE);
+        if(vehicle != null){
+            logger.info("Vehicle verified");
+            return true;
+        }
+            logger.info("Vehicle not verified");
         return false;
     }
 

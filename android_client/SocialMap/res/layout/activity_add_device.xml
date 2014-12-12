@@ -5,10 +5,13 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent" android:gravity="center">
 
-    <Spinner
+    <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spGroups" android:layout_gravity="center_horizontal"/>
+            android:id="@+id/etGroupId"
+            android:layout_gravity="center_horizontal"
+            android:hint="Group ID"
+            android:gravity="center"/>
     <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
