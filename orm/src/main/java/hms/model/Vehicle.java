@@ -61,7 +61,7 @@ public class Vehicle implements java.io.Serializable{
     @Column(name = "last_updated_time")
     private Date lastUpdatedTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private VehicleGroup vehicleGroup;
 
     public Long getId() {

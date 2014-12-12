@@ -31,7 +31,7 @@ public class VehicleServiceImpl implements VehicleService {
         Random random = new Random();
         Integer verificationCode = random.nextInt((99999 - 10001) + 1) + 10001;
         vehicle.setAuthenticationCode(verificationCode.toString());
-        boolean result = true;/*vehicleDao.save(vehicle)*/;
+        boolean result = vehicleDao.save(vehicle);
         if (result) {
             return vehicle;
         }
@@ -74,6 +74,9 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public List<Vehicle> getActiveVehiclesByGroup(Long groupId) {
-        return vehicleDao.getAllVehiclesByGroup(groupId, Vehicle.Status.ACTIVE);
+        logger.info("Request received to get vehicles for group {}", groupId);
+        List<Vehicle> vehicleList = vehicleDao.getAllVehiclesByGroup(groupId, Vehicle.Status.ACTIVE);
+        logger.info("{} vehicles found", vehicleList.size());
+        return vehicleList;
     }
 }

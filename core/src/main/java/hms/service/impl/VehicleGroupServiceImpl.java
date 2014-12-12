@@ -3,6 +3,8 @@ package hms.service.impl;
 import hms.dao.VehicleGroupDao;
 import hms.model.VehicleGroup;
 import hms.service.VehicleGroupService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,6 +22,9 @@ public class VehicleGroupServiceImpl implements VehicleGroupService {
     @Autowired
     private VehicleGroupDao vehicleGroupDao;
 
+    final static Logger logger = LogManager.getLogger(VehicleGroupService.class);
+
+
     @Override
     public boolean addVehicleGroup(VehicleGroup vehicleGroup) {
         return vehicleGroupDao.saveVehicleGroup(vehicleGroup);
@@ -27,7 +32,10 @@ public class VehicleGroupServiceImpl implements VehicleGroupService {
 
     @Override
     public List<VehicleGroup> getAllGroups() {
-        return vehicleGroupDao.getAllGroups();
+        logger.info("Request received to get vehicle groups");
+        List<VehicleGroup> vehicleGroupList = vehicleGroupDao.getAllGroups();
+        logger.info("{} vehicle groups found", vehicleGroupList.size());
+        return vehicleGroupList;
     }
 
     @Override
