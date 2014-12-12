@@ -11,10 +11,7 @@
 
     </jsp:attribute>
 
-
     <jsp:attribute name="page_body">
-
-        <p>home</p>
 
     </jsp:attribute>
 

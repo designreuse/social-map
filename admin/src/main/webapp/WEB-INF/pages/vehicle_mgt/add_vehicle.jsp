@@ -32,13 +32,13 @@
             <div class="form-group">
                 <label for="input-name" class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
-                    <form:input type="text" class="form-control" id="input-name" path="name" placeholder="Name"/>
+                    <form:input type="text" class="form-control" id="input-name" path="name" placeholder="Name" required="true"/>
                 </div>
             </div>
             <div class="form-group">
                 <label for="input-details" class="col-sm-2 control-label">Details</label>
                 <div class="col-sm-10">
-                    <form:textarea class="form-control" id="input-details" path="details" placeholder="Details" rows="3"></form:textarea>
+                    <form:textarea class="form-control" id="input-details" path="details" placeholder="Details" rows="3" required="true"></form:textarea>
                 </div>
             </div>
             <div class="form-group">
