@@ -86,13 +86,14 @@ public class HTTPRequest {
         return jsonObject;
     }
 
-    public static Response prepareResult(String jsonString) throws JSONException {
+    public static Map prepareResult(String jsonString) throws JSONException {
         if(jsonString!=null)
-            return prepareResultMap(Json2Map.convertJ2M(new JSONObject(jsonString)));
+            return Json2Map.convertJ2M(new JSONObject(jsonString));
         else
-            return prepareResultMap(null);
+            return null;
     }
 
+    @Deprecated
     private static Response prepareResultMap(Map map){
         Response response = new Response();
 
