@@ -29,4 +29,9 @@ public class VehicleGroupServiceImpl implements VehicleGroupService {
     public List<VehicleGroup> getAllGroups() {
         return vehicleGroupDao.getAllGroups();
     }
+
+    @Override
+    public VehicleGroup findVehicleGroupById(Long vehicleGroupId) {
+        return vehicleGroupDao.findVehicleGroupById(vehicleGroupId);
+    }
 }

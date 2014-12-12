@@ -4,6 +4,7 @@ import hms.dao.VehicleGroupDao;
 import hms.model.VehicleGroup;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,6 +27,15 @@ public class VehicleGroupDaoImpl extends UniversalDaoImpl implements VehicleGrou
         List<VehicleGroup> result = session.createCriteria(VehicleGroup.class)
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
+        return result;
+    }
+
+    @Override
+    public VehicleGroup findVehicleGroupById(Long vehicleGroupId) {
+        Session session = getSession();
+        VehicleGroup result = (VehicleGroup) session.createCriteria(VehicleGroup.class)
+                .add(Restrictions.eq("id", vehicleGroupId))
+                .uniqueResult();
         return result;
     }
 }
