@@ -25,10 +25,25 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Table(name = "vehicle")
 public class Vehicle implements java.io.Serializable{
+
+    public enum Status {
+        APPROVED, PENDING;
+    }
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @Column(name = "vehicle_id")
+    private String vehicleId;
+
+    @Column(name = "authentication_code")
+    private String authenticationCode;
+
+    @Column(name = "vehicle_status")
+    @Enumerated(EnumType.STRING)
+    private Status vehicleStatus;
 
     @Column(name = "name")
     private String name;
@@ -85,5 +100,29 @@ public class Vehicle implements java.io.Serializable{
     }
     public void setVehicleGroup(VehicleGroup vehicleGroup) {
         this.vehicleGroup = vehicleGroup;
+    }
+
+    public String getVehicleId() {
+        return vehicleId;
+    }
+
+    public void setVehicleId(String vehicleId) {
+        this.vehicleId = vehicleId;
+    }
+
+    public String getAuthenticationCode() {
+        return authenticationCode;
+    }
+
+    public void setAuthenticationCode(String authenticationCode) {
+        this.authenticationCode = authenticationCode;
+    }
+
+    public Status getVehicleStatus() {
+        return vehicleStatus;
+    }
+
+    public void setVehicleStatus(Status vehicleStatus) {
+        this.vehicleStatus = vehicleStatus;
     }
 }

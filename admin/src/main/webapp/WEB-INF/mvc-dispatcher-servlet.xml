@@ -1,19 +1,18 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.0.xsd
         http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
-        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <context:component-scan base-package="hms" />
-    <context:component-scan base-package="hms.controller" />
-    <mvc:annotation-driven />
-    <context:property-placeholder location="classpath*:system-config.properties"/>
+    <mvc:annotation-driven/>
+    <context:annotation-config/>
+    <context:component-scan base-package="hms"/>
 
     <bean id="viewResolver"
           class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -25,10 +24,18 @@
         </property>
     </bean>
 
+    <bean class="org.springframework.context.support.ResourceBundleMessageSource" id="messageSource">
+        <property name="basename" value="messages"/>
+    </bean>
+
+    <bean id="placeholderConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location" value="classpath:system-config.properties"/>
+    </bean>
+
     <mvc:resources mapping="/pages/**" location="WEB-INF/pages"/>
     <mvc:resources mapping="/css/**" location="css"/>
     <mvc:resources mapping="/js/**" location="js"/>
-    <mvc:resources mapping="/lib/**" location="lib"/>
+    <mvc:resources mapping="/fonts/**" location="fonts"/>
 
     <!--==========================Configure JDBC Connection==========================-->
 
