@@ -12,4 +12,6 @@ import java.util.List;
 public interface VehicleGroupDao {
     boolean saveVehicleGroup(VehicleGroup vehicleGroup);
     List<VehicleGroup> getAllGroups();
+
+    VehicleGroup findVehicleGroupById(Long vehicleGroupId);
 }

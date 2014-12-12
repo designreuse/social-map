@@ -101,6 +101,7 @@ public class AddDeviceActivity extends Activity {
                     loadingDialog.dismiss();
                     if(result!=null){
                         //TODO show success/fail
+                        //TODO run daemon if success
                     }else{
                         Toast.makeText(context,
                                 context.getString(R.string.err_connection_error),

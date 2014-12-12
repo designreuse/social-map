@@ -3,6 +3,7 @@ package com.winter.codefest.SocialMap.daemon;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import com.winter.codefest.SocialMap.R;
 import com.winter.codefest.SocialMap.model.Device;
 import com.winter.codefest.SocialMap.util.AsyncHttpPost;
@@ -15,6 +16,9 @@ import java.util.Map;
  * Created by Thilina on 12/12/2014.
  */
 public class UpdateLocationBroadcastReceiver extends BroadcastReceiver {
+
+    private static final String TAG = UpdateLocationBroadcastReceiver.class.getCanonicalName();
+
     @Override
     public void onReceive(Context context, Intent intent) {
 
@@ -29,6 +33,7 @@ public class UpdateLocationBroadcastReceiver extends BroadcastReceiver {
 
             @Override
             public void onPostExecute(String result) {
+                Log.d(TAG, result);
                 //TODO handle response
             }
         }.execute(params);
