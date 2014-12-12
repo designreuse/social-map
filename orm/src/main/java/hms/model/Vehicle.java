@@ -27,7 +27,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class Vehicle implements java.io.Serializable{
 
     public enum Status {
-        APPROVED, PENDING;
+        ACTIVE,
+        PENDING;
     }
 
     @Id
