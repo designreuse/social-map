@@ -4,7 +4,8 @@
 
 <%@ attribute name="page_body" fragment="true" required="true" %>
 <%@ attribute name="page_heading" fragment="true" %>
-<%@ attribute name="css_file_includes" fragment="true" %>
+<%@ attribute name="css" fragment="true" %>
+<%@ attribute name="js" fragment="true" %>
 
 <!doctype html>
 
@@ -17,8 +18,7 @@
         <link href="<c:url value="/css/material-wfont.min.css" />" rel="stylesheet">
         <link href="<c:url value="/css/sm-layout.css" />" rel="stylesheet">
 
-        <!-- for css file includes -->
-        <jsp:invoke fragment="css_file_includes"/>
+        <jsp:invoke fragment="css"/>
 
         <title>Social Map</title>
     </head>
@@ -47,6 +47,8 @@
                 $.material.init();
             });
         </script>
+
+        <jsp:invoke fragment="js"/>
 
     </body>
 
