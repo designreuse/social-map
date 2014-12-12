@@ -28,8 +28,8 @@ public class AddDeviceActivity extends Activity {
 
     private Button btnRegister;
     private EditText etCode;
+    private EditText etGroupId;
     private Context context;
-    private Spinner spGroups;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,49 +44,21 @@ public class AddDeviceActivity extends Activity {
                 btnRegisterOnClick();
             }
         });
+        etGroupId = (EditText) findViewById(R.id.etGroupId);
         etCode = (EditText) findViewById(R.id.etCode);
-        spGroups = (Spinner) findViewById(R.id.spGroups);
 
         Log.d(TAG, "initiate activity");
 
-        loadGroups();
-
     }
 
-    private void loadGroups() {
-        if(CheckNetwork.isInternetAvailable(this)){
-            new AsyncHttpPost(this, getString(R.string.server_base_url) + getString(R.string.path_get_groups)) {
-                LoadingDialog loadingDialog = new LoadingDialog(context);
-                @Override
-                protected void onPreExecute() {
-                    loadingDialog.show();
-                }
-
-                @Override
-                public void onPostExecute(String result) {
-                    loadingDialog.dismiss();
-                    if(result!=null){
-                        showGroups(result);
-                    }else{
-                        Toast.makeText(context,
-                                context.getString(R.string.err_connection_error),
-                                Toast.LENGTH_LONG).show();
-                    }
-                }
-            }.execute(new HashMap<String, String>());
-        }else{
-            Toast.makeText(context,
-                    context.getString(R.string.err_connection_error),
-                    Toast.LENGTH_LONG).show();
-        }
-    }
 
     private void btnRegisterOnClick() {
         Map params = new HashMap();
         params.put("vehicle-id", Device.getDeviceId());
         params.put("code", etCode.getText().toString());
-        params.put("latitude", GPS.getGPSLocation(this).getAltitude());
-        params.put("longitude", GPS.getGPSLocation(this).getLongitude());
+        params.put("group-id", etGroupId.getText().toString());
+//        params.put("latitude", GPS.getGPSLocation(this).getAltitude());
+//        params.put("longitude", GPS.getGPSLocation(this).getLongitude());
 
         if(CheckNetwork.isInternetAvailable(this)){
             new AsyncHttpPost(this, getString(R.string.server_base_url) + getString(R.string.path_get_groups)) {
@@ -116,25 +88,5 @@ public class AddDeviceActivity extends Activity {
         }
     }
 
-    private void showGroups(String result) {
-        try {
-            Map<String, Object> response = HTTPRequest.prepareResult(result);
-            if(response!=null){
-                List<String> list = getGroupList(response);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
-                        android.R.layout.simple_spinner_item, list);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spGroups.setAdapter(adapter);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private List<String> getGroupList(Map<String, Object> response) {
-        List<String> groups = new ArrayList<String>();
-        //TODO make the list
-        return groups;
-    }
 
 }
