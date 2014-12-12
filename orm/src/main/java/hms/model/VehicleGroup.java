@@ -12,7 +12,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "vehicle_group")
-public class VehicleGroup implements java.io.Serializable{
+public class VehicleGroup implements java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -21,18 +21,20 @@ public class VehicleGroup implements java.io.Serializable{
     String name;
     @Column(name = "details")
     String details;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "start")
     Location start;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "end")
     Location end;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "vehicleGroup", cascade = CascadeType.ALL)
-    private Set<Vehicle> vehicles = new HashSet<Vehicle>();;
+    private Set<Vehicle> vehicles = new HashSet<Vehicle>();
+    ;
 
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -40,6 +42,7 @@ public class VehicleGroup implements java.io.Serializable{
     public String getName() {
         return name;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -47,6 +50,7 @@ public class VehicleGroup implements java.io.Serializable{
     public String getDetails() {
         return details;
     }
+
     public void setDetails(String details) {
         this.details = details;
     }
@@ -54,6 +58,7 @@ public class VehicleGroup implements java.io.Serializable{
     public Location getStart() {
         return start;
     }
+
     public void setStart(Location start) {
         this.start = start;
     }
@@ -61,6 +66,7 @@ public class VehicleGroup implements java.io.Serializable{
     public Location getEnd() {
         return end;
     }
+
     public void setEnd(Location end) {
         this.end = end;
     }
@@ -68,6 +74,7 @@ public class VehicleGroup implements java.io.Serializable{
     public Set<Vehicle> getVehicles() {
         return vehicles;
     }
+
     public void setVehicles(Set<Vehicle> vehicles) {
         this.vehicles = vehicles;
     }

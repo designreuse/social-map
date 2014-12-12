@@ -103,10 +103,9 @@ public class RequestController {
             for (VehicleGroup vehicleGroup : vehicleGroups) {
                 vehicleGroup.setVehicles(null);
             }
-            //todo process the request
             response.put("responseContext", vehicleGroups);
         } catch (Exception e) {
-            response.put("responseContext", "Internal Error");
+            response.put("responseContext", ResponseStatus.FAIL);
         }
         return response;
     }
