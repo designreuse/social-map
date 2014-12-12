@@ -1,7 +1,11 @@
 package com.winter.codefest.SocialMap.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -31,7 +35,7 @@ public class MainActivity extends Activity {
 //            googleMap.setMyLocationEnabled(true);
             CameraPosition camPos = new CameraPosition.Builder()
                     .target(new LatLng(7, 81))
-                    .zoom(7)
+                    .zoom(8)
                     .tilt(70)
                     .build();
 
@@ -47,6 +51,33 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.register:
+                startRegisteractivity();
+                return true;
+            case R.id.help:
+//                showHelp();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void startRegisteractivity(){
+        Intent intent = new Intent(this, AddDeviceActivity.class);
+        startActivity(intent);
     }
 
 }

@@ -20,7 +20,8 @@
             android:layout_height="399dp"
             android:name="com.google.android.gms.maps.MapFragment"
             tools:layout="@layout/maplayout"
-            android:layout_alignParentBottom="true" />
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/button" />
 
         <Button
             android:layout_width="wrap_content"
