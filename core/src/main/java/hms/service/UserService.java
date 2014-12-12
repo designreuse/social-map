@@ -22,5 +22,7 @@ import java.util.List;
  */
 
 public interface UserService {
-    List<User> finAll();
+    List<User> findAll();
+
+    Boolean isAuthenticUser(String userName, String password);
 }

@@ -42,7 +42,7 @@ public class RequestController {
         Map response = new HashMap();
         try {
             System.out.println("request proceed");
-            List<User> userList = userService.finAll();
+            List<User> userList = userService.findAll();
             System.out.println("user list:"+userList);
             response.put("responseContext", userList);
         } catch (Exception e) {

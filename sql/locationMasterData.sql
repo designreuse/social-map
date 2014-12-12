@@ -1,0 +1,2 @@
+INSERT INTO location (id,latitude,longitude,name) VALUES ("",7.284459000000000000,80.637459000000040000,"Kandy");
+INSERT INTO location (id,latitude,longitude,name) VALUES ("",6.927078600000000000,79.861243000000060000,"Colombo");

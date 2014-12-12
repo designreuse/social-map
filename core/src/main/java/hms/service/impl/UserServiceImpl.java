@@ -31,7 +31,16 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserDao userDao;
     @Override
-    public List<User> finAll() {
+    public List<User> findAll() {
         return userDao.findAll();
+    }
+
+    @Override
+    public Boolean isAuthenticUser(String userName, String password) {
+        if(userDao.authenticateUser(userName, password)!=null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
