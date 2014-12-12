@@ -10,4 +10,6 @@ import java.util.List;
 public interface LocationDao {
 
     List<Location> getAllLocations();
+
+    Location findLocationById(Long locationId);
 }
