@@ -11,15 +11,15 @@
 
     <jsp:attribute name="page_body">
 
+        <div class="text-center">
+
+            <h4>Authentication Code</h4>
+            <h2> <span class="label label-info">${authenticationCode}</span> </h2>
+            <br/>
             <h4>Group ID</h4>
+            <h3> <span class="label label-info">${vehicleGroupId}</span> </h3>
 
-            <h4></h4>
-            <h3> <span class="label label-info">${authenticationCode}</span> </h3>
-
-                    <label for="input-auth-code" class="col-sm-2 control-label">Authentication Code</label>
-
-                        <p class="form-control-static" id="input-auth-code"> <span class="label label-info">${vehicleGroupId}</span> </p>
-
+        </div>
 
     </jsp:attribute>
 

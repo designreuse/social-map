@@ -29,12 +29,15 @@
 
         <div class="body-container container">
 
-            <h2 class="page-heading">
-            <jsp:invoke fragment="page_heading"/>
-            </h2>
-            <hr class="heading-hr">
+             <div  class="well">
+                <h2 class="page-heading">
+                <jsp:invoke fragment="page_heading"/>
+                </h2>
+                <hr class="heading-hr">
 
-            <jsp:invoke fragment="page_body"/>
+                <jsp:invoke fragment="page_body"/>
+             </div>
+
         </div>
 
         <script src="<c:url value="/js/jquery-1.11.1.min.js" />"></script>
