@@ -12,11 +12,12 @@ package hms;/*   File Name - RequestControler
  *
  */
 
-import hms.model.User;
 import hms.model.Vehicle;
 import hms.model.VehicleGroup;
 import hms.service.UserService;
 import hms.service.VehicleGroupService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -40,13 +41,16 @@ public class RequestController {
     @Autowired
     private VehicleGroupService vehicleGroupService;
 
+    final static Logger logger = LogManager.getLogger(RequestController.class);
+
     @RequestMapping(value = "/vehicle/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public
     @ResponseBody
     Map<String, Object> getRegisterMerchant(@RequestBody Map<String, Object> request) {
         Map response = new HashMap();
         try {
-            System.out.println("register merchant: "+request);
+            System.out.println("register merchant: " + request);
+            logger.info("Register vehicle: {}", request);
             //todo process the request
             response.put("responseContext", "Vehicle registration success");
         } catch (Exception e) {
@@ -61,7 +65,7 @@ public class RequestController {
     Map<String, Object> currentLocation(@RequestBody Map<String, Object> request) {
         Map response = new HashMap();
         try {
-            System.out.println("current vehicle location: "+request);
+            System.out.println("current vehicle location: " + request);
             //todo process the request
             response.put("responseContext", "Vehicle current location updated");
         } catch (Exception e) {
@@ -76,7 +80,7 @@ public class RequestController {
     Map<String, Object> searchGroup(@RequestBody Map<String, Object> request) {
         Map response = new HashMap();
         try {
-            System.out.println("get all groups"+request);
+            System.out.println("get all groups" + request);
             List<VehicleGroup> vehicleGroups = vehicleGroupService.getAllGroups();
             for (VehicleGroup vehicleGroup : vehicleGroups) {
                 vehicleGroup.setVehicles(null);
@@ -95,7 +99,7 @@ public class RequestController {
     Map<String, Object> locateVehicle(@RequestBody Map<String, Object> request) {
         Map response = new HashMap();
         try {
-            System.out.println("locate vehicle"+request);
+            System.out.println("locate vehicle" + request);
             //todo process the request
             Vehicle vehicle = new Vehicle();
             response.put("responseContext", vehicle);
