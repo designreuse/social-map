@@ -9,6 +9,8 @@ public interface VehicleDao {
 
     boolean update(Vehicle vehicle);
 
+    Vehicle getVehicleById(String vehicleId);
+
     Vehicle getVehicleByGroupAndCode(Long groupId, String code, Vehicle.Status status);
 
 }

@@ -56,7 +56,17 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public boolean updateVehicleLocation(String vehicleId, BigDecimal longitude, BigDecimal latitude, Date time) {
-        return false;
+        logger.info("Request received update vehicle location");
+        Vehicle vehicle = vehicleDao.getVehicleById(vehicleId);
+        if(vehicle == null){
+            logger.error("Vehicle not registered {}", vehicleId);
+            return  false;
+        }
+        vehicle.setLongitude(longitude);
+        vehicle.setLongitude(latitude);
+        vehicle.setLastUpdatedTime(time);
+        logger.info("Location updated for vehicle {}", vehicleId);
+        return vehicleDao.update(vehicle);
     }
 
     @Override

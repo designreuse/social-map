@@ -17,6 +17,7 @@ import hms.model.VehicleGroup;
 import hms.service.UserService;
 import hms.service.VehicleGroupService;
 import hms.service.VehicleService;
+import hms.util.DateUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -55,15 +57,14 @@ public class RequestController {
             logger.info("Register vehicle: {}", request);
             boolean isVerified = vehicleService.VerifyVehicle(Long.parseLong(request.get("group-id").toString()), request.get("vehicle-id").toString(), request.get("code").toString());
 
-            if(isVerified) {
+            if (isVerified) {
                 response.put("responseContext", ResponseStatus.SUCCESS);
-            }
-            else {
-                response.put("responseContext", ResponseStatus.FAIL);
+            } else {
+                response.put("responseContext", ResponseStatus.ERROR);
 
             }
         } catch (Exception e) {
-            response.put("responseContext", ResponseStatus.ERROR);
+            response.put("responseContext", ResponseStatus.FAIL);
             logger.error("Error occurred in vehicle verification", e);
         }
         return response;
@@ -75,11 +76,18 @@ public class RequestController {
     Map<String, Object> currentLocation(@RequestBody Map<String, Object> request) {
         Map response = new HashMap();
         try {
-            logger.info("Current vehicle location: {}", request);
-            //todo process the request
-            response.put("responseContext", "Vehicle current location updated");
+            logger.info("Update current vehicle location: {}", request);
+            boolean result = vehicleService.updateVehicleLocation(request.get("vehicle-id").toString(), new BigDecimal(request.get("longitude").toString()), new BigDecimal(request.get("latitude").toString()), DateUtils.StringToDateTime(request.get("time").toString()));
+            if (result == true) {
+                response.put("responseContext", ResponseStatus.SUCCESS);
+            } else {
+                response.put("responseContext", ResponseStatus.ERROR);
+
+            }
         } catch (Exception e) {
-            response.put("responseContext", "Internal Error");
+            response.put("responseContext", ResponseStatus.FAIL);
+            logger.error("Error occurred while updating vehicle location", e);
+
         }
         return response;
     }
