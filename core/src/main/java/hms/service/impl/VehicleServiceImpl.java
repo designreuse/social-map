@@ -47,8 +47,10 @@ public class VehicleServiceImpl implements VehicleService {
         logger.info("Request received to verify vehicle");
         Vehicle vehicle = vehicleDao.getVehicleByGroupAndCode(groupId, verificationCode, Vehicle.Status.ACTIVE);
         if(vehicle != null){
+            vehicle.setVehicleId(vehicleId);
+            boolean result = vehicleDao.update(vehicle);
             logger.info("Vehicle verified");
-            return true;
+            return result;
         }
             logger.info("Vehicle not verified");
         return false;
