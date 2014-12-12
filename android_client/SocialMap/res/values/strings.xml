@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SocialMap</string>
-    <string name="server.http.url">http://myurl</string>
+
+    <!--base url of the server:  http://[ip]:[port]/[app]/-->
+    <string name="server.base.url">http://myurl</string>
+
+    <!--paths for eatch functions-->
+    <!--reg device-->
+    <string name="path.reg">/vehicle/register</string>
+    <!--send vehicle location to server-->
+    <string name="path.location.send">/vehicle/current/location</string>
+    <!--search recieve vehicle locations-->
+    <string name="path.group.location">/user/locate/vehicle</string>
+    <!--get list of start / end locations (groups)-->
+    <string name="path.get.groups">/user/get/all/groups</string>
 </resources>
