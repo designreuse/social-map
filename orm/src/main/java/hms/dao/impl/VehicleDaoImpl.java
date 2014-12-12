@@ -1,6 +1,7 @@
 package hms.dao.impl;
 
 import hms.dao.VehicleDao;
+import hms.model.Vehicle;
 import org.springframework.stereotype.Repository;
 
 
@@ -8,12 +9,12 @@ import org.springframework.stereotype.Repository;
 public class VehicleDaoImpl extends UniversalDaoImpl implements VehicleDao {
 
     @Override
-    public boolean save(Object object) {
-        return super.save(object);
+    public boolean save(Vehicle vehicle) {
+        return super.save(vehicle);
     }
 
     @Override
-    public boolean update(Object object) {
-        return super.update(object);
+    public boolean update(Vehicle vehicle) {
+        return super.update(vehicle);
     }
 }

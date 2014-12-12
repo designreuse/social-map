@@ -1,9 +1,11 @@
 package hms.dao;
 
 
+import hms.model.Vehicle;
+
 public interface VehicleDao {
 
-    boolean save(Object object);
+    boolean save(Vehicle vehicle);
 
-    boolean update(Object object);
+    boolean update(Vehicle vehicle);
 }

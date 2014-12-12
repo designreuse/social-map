@@ -25,6 +25,11 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Entity
 @Table(name = "vehicle")
 public class Vehicle implements java.io.Serializable{
+
+    public enum Status {
+        APPROVED, PENDING;
+    }
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id")
@@ -37,7 +42,8 @@ public class Vehicle implements java.io.Serializable{
     private String authenticationCode;
 
     @Column(name = "vehicleStatus")
-    private String vehicleStatus;
+    @Enumerated(EnumType.STRING)
+    private Status vehicleStatus;
 
     @Column(name = "name")
     private String name;
@@ -112,11 +118,11 @@ public class Vehicle implements java.io.Serializable{
         this.authenticationCode = authenticationCode;
     }
 
-    public String getVehicleStatus() {
+    public Status getVehicleStatus() {
         return vehicleStatus;
     }
 
-    public void setVehicleStatus(String vehicleStatus) {
+    public void setVehicleStatus(Status vehicleStatus) {
         this.vehicleStatus = vehicleStatus;
     }
 }
