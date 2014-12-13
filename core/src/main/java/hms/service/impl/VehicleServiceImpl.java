@@ -45,7 +45,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public boolean VerifyVehicle(Long groupId, String vehicleId, String verificationCode) {
         logger.info("Request received to verify vehicle");
-        Vehicle vehicle = vehicleDao.getVehicleByGroupAndCode(groupId, verificationCode, Vehicle.Status.ACTIVE);
+        Vehicle vehicle = vehicleDao.getVehicleByGroupAndCode(groupId, verificationCode, Vehicle.Status.PENDING);
         if (vehicle != null) {
             vehicle.setVehicleId(vehicleId);
             boolean result = vehicleDao.update(vehicle);
@@ -65,7 +65,7 @@ public class VehicleServiceImpl implements VehicleService {
             return false;
         }
         vehicle.setLongitude(longitude);
-        vehicle.setLongitude(latitude);
+        vehicle.setLatitude(latitude);
         vehicle.setLastUpdatedTime(time);
         logger.info("Location updated for vehicle {}", vehicleId);
         return vehicleDao.update(vehicle);

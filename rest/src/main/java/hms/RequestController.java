@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,7 +78,7 @@ public class RequestController {
         Map response = new HashMap();
         try {
             logger.info("Update current vehicle location: {}", request);
-            boolean result = vehicleService.updateVehicleLocation(request.get("vehicle-id").toString(), new BigDecimal(request.get("longitude").toString()), new BigDecimal(request.get("latitude").toString()), DateUtils.StringToDateTime(request.get("time").toString()));
+            boolean result = vehicleService.updateVehicleLocation(request.get("vehicle-id").toString(), new BigDecimal(request.get("longitude").toString()), new BigDecimal(request.get("latitude").toString()), new Date(Long.parseLong(request.get("time").toString())));
             if (result == true) {
                 response.put("responseContext", ResponseStatus.SUCCESS);
             } else {
