@@ -6,11 +6,13 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -22,11 +24,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.winter.codefest.SocialMap.R;
+import com.winter.codefest.SocialMap.dialog.LoadingDialog;
+import com.winter.codefest.SocialMap.util.AsyncHttpPost;
+import com.winter.codefest.SocialMap.util.CheckNetwork;
 import com.winter.codefest.SocialMap.util.HTTPRequest;
 
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -62,6 +68,7 @@ public class MainActivity extends Activity {
                 googleMap = ((MapFragment) getFragmentManager().
                         findFragmentById(R.id.map)).getMap();
             }
+            googleMap.clear();
             googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 //            googleMap.setMyLocationEnabled(true);
             CameraPosition camPos = new CameraPosition.Builder()
@@ -76,8 +83,12 @@ public class MainActivity extends Activity {
             googleMap.animateCamera(camUpd3);
             if (mapList != null){
                 for (int i = 0; i < mapList.size(); i++){
-                    LatLng latLng = new LatLng(Double.valueOf((String) mapList.get(i).get("latitude")), Double.valueOf((String) mapList.get(i).get("longitude")));
-                    googleMap.animateCamera(CameraUpdateFactory.zoomTo(10.0f));
+                    LatLng latLng = new LatLng((Double)mapList.get(i).get("latitude"), (Double) mapList.get(i).get("longitude"));
+                    CameraUpdate center= CameraUpdateFactory.newLatLng(latLng);
+                    CameraUpdate zoom=CameraUpdateFactory.zoomTo(10f);
+                    googleMap.moveCamera(center);
+                    googleMap.animateCamera(zoom);
+
             Marker TP = googleMap.addMarker(new MarkerOptions().
                     position(latLng).title((String) mapList.get(i).get("details")));
                     TP.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
@@ -120,39 +131,71 @@ public class MainActivity extends Activity {
     }
 
     private void loadGroups() {
-//        if(CheckNetwork.isInternetAvailable(this)){
-//            new AsyncHttpPost(this, getString(R.string.server_base_url) + getString(R.string.path_get_groups)) {
-//                LoadingDialog loadingDialog = new LoadingDialog(MainActivity.this);
-//                @Override
-//                protected void onPreExecute() {
-//                    loadingDialog.show();
-//                }
-//
-//                @Override
-//                public void onPostExecute(String result) {
-//                    loadingDialog.dismiss();
-//                    if(result!=null){
-                        showGroups(tempGroupList());
-//                    }else{
-//                        Toast.makeText(MainActivity.this,
-//                                MainActivity.this.getString(R.string.err_connection_error),
-//                                Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//            }.execute(new HashMap<String, String>());
-//        }else{
-//            Toast.makeText(MainActivity.this,
-//                    MainActivity.this.getString(R.string.err_connection_error),
-//                    Toast.LENGTH_LONG).show();
-//        }
+        if(CheckNetwork.isInternetAvailable(this)){
+            new AsyncHttpPost(this, getString(R.string.server_base_url) + getString(R.string.path_get_groups)) {
+                LoadingDialog loadingDialog = new LoadingDialog(MainActivity.this);
+                @Override
+                protected void onPreExecute() {
+                    loadingDialog.show();
+                }
+
+                @Override
+                public void onPostExecute(String result) {
+                    loadingDialog.dismiss();
+                    if(result!=null){
+                        showGroups(result);
+                    }else{
+                        Toast.makeText(MainActivity.this,
+                                MainActivity.this.getString(R.string.err_connection_error),
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            }.execute(new HashMap<String, String>());
+        }else{
+            Toast.makeText(MainActivity.this,
+                    MainActivity.this.getString(R.string.err_connection_error),
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
-    private void loadVehicles(){
-        String result = tempVehicles();
+    private void loadVehicles(Integer id) {
+        if(CheckNetwork.isInternetAvailable(this)){
+            Map<String, String> post = new HashMap<String, String>();
+            System.out.println("### "+id);
+            post.put("group-id", String.valueOf(id));
+            new AsyncHttpPost(this, getString(R.string.server_base_url) + getString(R.string.path_group_location)) {
+                LoadingDialog loadingDialog = new LoadingDialog(MainActivity.this);
+                @Override
+                protected void onPreExecute() {
+                    loadingDialog.show();
+                }
+
+                @Override
+                public void onPostExecute(String result) {
+                    loadingDialog.dismiss();
+                    if(result!=null){
+                        Log.d("===============================", result);
+                        createVehiclesList(result);
+                    }else{
+                        Toast.makeText(MainActivity.this,
+                                MainActivity.this.getString(R.string.err_connection_error),
+                                 Toast.LENGTH_LONG).show();
+                    }
+                }
+            }.execute(post);
+        }else{
+            Toast.makeText(MainActivity.this,
+                    MainActivity.this.getString(R.string.err_connection_error),
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void createVehiclesList(String result){
         try {
             Map<String, Object> response = HTTPRequest.prepareResult(result);
             if(response!=null){
-                List<Map> list = (List<Map>) response.get("vehicles");
+                List<Map> list = (List<Map>) response.get("responseContext");
+                Log.d("createVehicleList", list.toString());
                 setGoogleMap(list);
             }
         } catch (JSONException e) {
@@ -184,11 +227,12 @@ public class MainActivity extends Activity {
         try {
             Map<String, Object> response = HTTPRequest.prepareResult(result);
             if(response!=null){
-                List<Map> list = (List<Map>) response.get("groups");
+                List<Map> list = (List<Map>) response.get("responseContext");
 //                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),
 //                        android.R.layout.simple_spinner_item, list);
 //                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 //                spGroups.setAdapter(adapter);
+                Log.d("List============",list.toString());
                 Dialog dialog = onCreateDialogSingleChoice(list);
                 dialog.show();
             }
@@ -198,39 +242,28 @@ public class MainActivity extends Activity {
     }
 
     public Dialog onCreateDialogSingleChoice(List<Map> list) {
-        final int[] x = new int[1];
-        final List<String> ids = new ArrayList<String>();
+        final List<Integer> ids = new ArrayList<Integer>();
         //Initialize the Alert Dialog
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //Source of the data in the DIalog
         String[] arr = new String[list.size()];
         for (int i=0;i<list.size();i++){
             arr[i] = (String)list.get(i).get("name");
-            ids.add((String) list.get(i).get("id"));
+            ids.add((Integer) list.get(i).get("id"));
         }
-        // Set the dialog title
                 builder.setTitle("Select Route")
-        // Specify the list array, the items to be selected by default (null for none),
-        // and the listener through which to receive callbacks when items are selected
-
                         .setSingleChoiceItems(arr, 1, new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // TODO Auto-generated method stub
-                                x[0] =which;
                             }
                         })
 
-        // Set the action buttons
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
-                                // User clicked OK, so save the result somewhere
-                                // or return them to the component that opened the dialog
-                                //TODO send this id to server
-                                System.out.println("=========="+ids.get(x[0]));
-                                loadVehicles();
+                                int selectedPosition = ((AlertDialog)dialog).getListView().getCheckedItemPosition();
+                                loadVehicles(ids.get(selectedPosition));
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
