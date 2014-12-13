@@ -78,7 +78,7 @@ public class RequestController {
         Map response = new HashMap();
         try {
             logger.info("Update current vehicle location: {}", request);
-            boolean result = vehicleService.updateVehicleLocation(request.get("vehicle-id").toString(), new BigDecimal(request.get("longitude").toString()), new BigDecimal(request.get("latitude").toString()), new Date(Long.parseLong(request.get("time").toString())));
+            boolean result = vehicleService.updateVehicleLocation(request.get("vehicle-id").toString(), new BigDecimal(request.get("longitude").toString()), new BigDecimal(request.get("latitude").toString()), new Date());
             if (result == true) {
                 response.put("responseContext", ResponseStatus.SUCCESS);
             } else {
