@@ -52,10 +52,10 @@ public class Vehicle implements java.io.Serializable{
     @Column(name = "details")
     private String details;
 
-    @Column(name = "longitude")
+    @Column(name = "longitude", precision = 30, scale = 20)
     private BigDecimal longitude;
 
-    @Column(name = "latitude")
+    @Column(name = "latitude", precision = 30, scale = 20)
     private BigDecimal latitude;
 
     @Column(name = "last_updated_time")
