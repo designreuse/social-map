@@ -13,7 +13,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<c:url value="/home"/>"><strong>Social Map</strong></a>
+      <a class="navbar-brand" href="<c:url value="/"/>"><strong>Social Map</strong></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
