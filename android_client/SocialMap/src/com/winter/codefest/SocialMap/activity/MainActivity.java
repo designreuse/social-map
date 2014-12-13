@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.winter.codefest.SocialMap.R;
 import com.winter.codefest.SocialMap.dialog.LoadingDialog;
+import com.winter.codefest.SocialMap.session.Session;
 import com.winter.codefest.SocialMap.util.AsyncHttpPost;
 import com.winter.codefest.SocialMap.util.CheckNetwork;
 import com.winter.codefest.SocialMap.util.HTTPRequest;
@@ -107,6 +108,10 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main_menu, menu);
+        if(!Session.isRegistered(this)){
+            MenuItem menuItem = menu.findItem(R.id.tracker);
+            menuItem.setVisible(false);
+        }
         return true;
     }
 
@@ -120,9 +125,17 @@ public class MainActivity extends Activity {
             case R.id.help:
 //                showHelp();
                 return true;
+            case R.id.tracker:
+                showTrackerPage();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showTrackerPage() {
+        Intent intent = new Intent(this, TrackerActivity.class);
+        startActivity(intent);
     }
 
     private void startRegisteractivity(){

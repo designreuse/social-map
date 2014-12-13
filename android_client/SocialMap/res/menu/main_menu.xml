@@ -5,4 +5,7 @@
         android:showAsAction="ifRoom"/>
     <item android:id="@+id/help"
         android:title="Help" />
+    <item android:id="@+id/tracker"
+        android:showAsAction="ifRoom"
+        android:title="Tracker" />
 </menu>

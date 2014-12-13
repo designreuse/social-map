@@ -4,11 +4,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+
 import com.winter.codefest.SocialMap.R;
 import com.winter.codefest.SocialMap.model.Device;
 import com.winter.codefest.SocialMap.util.AsyncHttpPost;
 import com.winter.codefest.SocialMap.util.GPS;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,18 +25,21 @@ public class UpdateLocationBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         Map params = new HashMap();
-        params.put("vehicle-id", Device.getDeviceId());
+        params.put("vehicle-id", Device.getDeviceId(context));
         params.put("longitude", GPS.getGPSLocation(context).getLongitude());
         params.put("latitude", GPS.getGPSLocation(context).getLatitude());
-        params.put("time", GPS.getGPSLocation(context).getTime());
+        Date date = new Date();
+        params.put("time", date.getTime());
 
         new AsyncHttpPost(context, context.getString(R.string.server_base_url) +
                 context.getString(R.string.path_location_send)) {
 
             @Override
             public void onPostExecute(String result) {
-                Log.d(TAG, result);
-                //TODO handle response
+                if(result!=null){
+                    Log.d(TAG, result);
+                    //TODO handle response
+                }
             }
         }.execute(params);
     }

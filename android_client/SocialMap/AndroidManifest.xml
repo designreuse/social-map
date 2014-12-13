@@ -50,6 +50,8 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCEg-uwR2lPqmJ9yk8vI87_NwALGhq9DxM" />
         <activity android:name=".activity.AddDeviceActivity"/>
+        <activity android:name=".activity.TrackerActivity" />
+
         <receiver android:name=".daemon.UpdateLocationBroadcastReceiver"/>
     </application>
 

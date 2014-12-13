@@ -3,13 +3,13 @@
     <string name="app_name">SocialMap</string>
 
     <!--base url of the server:  http://[ip]:[port]/[app]/-->
-    <string name="server_base_url">http://192.168.0.238:8080/social-map</string>
+    <string name="server_base_url">http://192.168.0.243:8080/social-map</string>
 
     <!--paths for eatch functions-->
     <!--reg device-->
-    <string name="path_reg">/vehicle/register</string>
+    <string name="path_reg">/rest/request/vehicle/register</string>
     <!--send vehicle location to server-->
-    <string name="path_location_send">/vehicle/current/location</string>
+    <string name="path_location_send">/rest/request/vehicle/current/location</string>
     <!--search recieve vehicle locations-->
     <string name="path_group_location">/rest/request/user/locate/vehicle</string>
     <!--get list of start / end locations (groups)-->
