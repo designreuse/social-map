@@ -79,4 +79,9 @@ public class VehicleServiceImpl implements VehicleService {
         logger.info("{} vehicles found", vehicleList.size());
         return vehicleList;
     }
+
+    @Override
+    public List<Vehicle> getAllVehicles() {
+        return vehicleDao.getAllVehicles();
+    }
 }
