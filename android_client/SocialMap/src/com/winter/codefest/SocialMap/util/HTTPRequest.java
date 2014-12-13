@@ -79,8 +79,7 @@ public class HTTPRequest {
     private static JSONObject prepareJsonObject(Map params){
         JSONObject jsonObject = null;
         try {
-            jsonObject = new JSONObject();
-            jsonObject.put(PARAMS, getJsonObjectFromMap(params));
+            jsonObject = getJsonObjectFromMap(params);
         } catch (JSONException e) {
             e.printStackTrace();
         }
