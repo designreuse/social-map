@@ -17,4 +17,6 @@ public interface VehicleDao {
 
     List<Vehicle> getAllVehiclesByGroup(Long groupId, Vehicle.Status status);
 
+    List<Vehicle> getAllVehicles();
+
 }

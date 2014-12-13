@@ -51,4 +51,12 @@ public class VehicleDaoImpl extends UniversalDaoImpl implements VehicleDao {
                 .list();
         return result;
     }
+
+    @Override
+    public List<Vehicle> getAllVehicles() {
+        Session session = getSession();
+        List<Vehicle> result = (List<Vehicle>) session.createCriteria(Vehicle.class)
+                .list();
+        return result;
+    }
 }

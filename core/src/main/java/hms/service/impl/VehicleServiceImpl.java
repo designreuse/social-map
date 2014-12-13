@@ -39,7 +39,7 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public Vehicle getVehicleById(String vehicleId) {
-        return null;
+        return vehicleDao.getVehicleById(vehicleId);
     }
 
     @Override
@@ -48,6 +48,7 @@ public class VehicleServiceImpl implements VehicleService {
         Vehicle vehicle = vehicleDao.getVehicleByGroupAndCode(groupId, verificationCode, Vehicle.Status.PENDING);
         if (vehicle != null) {
             vehicle.setVehicleId(vehicleId);
+            vehicle.setVehicleStatus(Vehicle.Status.ACTIVE);
             boolean result = vehicleDao.update(vehicle);
             logger.info("Vehicle verified");
             return result;
@@ -77,5 +78,10 @@ public class VehicleServiceImpl implements VehicleService {
         List<Vehicle> vehicleList = vehicleDao.getAllVehiclesByGroup(groupId, Vehicle.Status.ACTIVE);
         logger.info("{} vehicles found", vehicleList.size());
         return vehicleList;
+    }
+
+    @Override
+    public List<Vehicle> getAllVehicles() {
+        return vehicleDao.getAllVehicles();
     }
 }
