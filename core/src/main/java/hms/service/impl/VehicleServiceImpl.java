@@ -7,8 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -17,8 +16,8 @@ import java.util.Random;
 /**
  * Created by sadupa on 12/12/14.
  */
-@Service
 @Transactional
+@Service("vehicleService")
 public class VehicleServiceImpl implements VehicleService {
     @Autowired
     VehicleDao vehicleDao;
