@@ -26,21 +26,24 @@ public class UpdateLocationBroadcastReceiver extends BroadcastReceiver {
 
         Map params = new HashMap();
         params.put("vehicle-id", Device.getDeviceId(context));
-        params.put("longitude", GPS.getGPSLocation(context).getLongitude());
-        params.put("latitude", GPS.getGPSLocation(context).getLatitude());
-        Date date = new Date();
-        params.put("time", date.getTime());
+        if(GPS.getGPSLocation(context)!=null){
+            params.put("longitude", GPS.getGPSLocation(context).getLongitude());
+            params.put("latitude", GPS.getGPSLocation(context).getLatitude());
+            Date date = new Date();
+            params.put("time", date.getTime());
 
-        new AsyncHttpPost(context, context.getString(R.string.server_base_url) +
-                context.getString(R.string.path_location_send)) {
+            new AsyncHttpPost(context, context.getString(R.string.server_base_url) +
+                    context.getString(R.string.path_location_send)) {
 
-            @Override
-            public void onPostExecute(String result) {
-                if(result!=null){
-                    Log.d(TAG, result);
-                    //TODO handle response
+                @Override
+                public void onPostExecute(String result) {
+                    if(result!=null){
+                        Log.d(TAG, result);
+                        //TODO handle response
+                    }
                 }
-            }
-        }.execute(params);
+            }.execute(params);
+        }
+
     }
 }

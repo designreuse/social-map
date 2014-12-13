@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_socialmap" default="compile.module.socialmap">
+  <dirname property="module.socialmap.basedir" file="${ant.file.module_socialmap}"/>
+  
+  <property name="module.jdk.home.socialmap" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.socialmap" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.socialmap" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.socialmap" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="socialmap.output.dir" value="${module.socialmap.basedir}/out/production/SocialMap"/>
+  <property name="socialmap.testoutput.dir" value="${module.socialmap.basedir}/out/test/SocialMap"/>
+  
+  <path id="socialmap.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="socialmap.module.production.classpath">
+    <path refid="${module.jdk.classpath.socialmap}"/>
+    <fileset dir="${basedir}/../../../../tools/android-sdk/extras/google/google_play_services/libproject/google-play-services_lib/libs">
+      <patternset refid="library.patterns"/>
+    </fileset>
+    <pathelement location="${google-play-services_lib1.output.dir}"/>
+  </path>
+  
+  <path id="socialmap.runtime.production.module.classpath">
+    <pathelement location="${socialmap.output.dir}"/>
+    <fileset dir="${basedir}/../../../../tools/android-sdk/extras/google/google_play_services/libproject/google-play-services_lib/libs">
+      <patternset refid="library.patterns"/>
+    </fileset>
+    <path refid="google-play-services_lib1.runtime.production.module.classpath"/>
+  </path>
+  
+  <path id="socialmap.module.classpath">
+    <path refid="${module.jdk.classpath.socialmap}"/>
+    <pathelement location="${socialmap.output.dir}"/>
+    <fileset dir="${basedir}/../../../../tools/android-sdk/extras/google/google_play_services/libproject/google-play-services_lib/libs">
+      <patternset refid="library.patterns"/>
+    </fileset>
+    <pathelement location="${google-play-services_lib1.testoutput.dir}"/>
+    <pathelement location="${google-play-services_lib1.output.dir}"/>
+  </path>
+  
+  <path id="socialmap.runtime.module.classpath">
+    <pathelement location="${socialmap.testoutput.dir}"/>
+    <pathelement location="${socialmap.output.dir}"/>
+    <fileset dir="${basedir}/../../../../tools/android-sdk/extras/google/google_play_services/libproject/google-play-services_lib/libs">
+      <patternset refid="library.patterns"/>
+    </fileset>
+    <path refid="google-play-services_lib1.runtime.module.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.socialmap">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.socialmap">
+    <patternset refid="excluded.from.module.socialmap"/>
+  </patternset>
+  
+  <path id="socialmap.module.sourcepath">
+    <dirset dir="${module.socialmap.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.socialmap" depends="compile.module.socialmap.production,compile.module.socialmap.tests" description="Compile module SocialMap"/>
+  
+  <target name="compile.module.socialmap.production" depends="register.custom.compilers,compile.module.google-play-services_lib1" description="Compile module SocialMap; production classes">
+    <mkdir dir="${socialmap.output.dir}"/>
+    <javac2 destdir="${socialmap.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.socialmap}/javac">
+      <compilerarg line="${compiler.args.socialmap}"/>
+      <bootclasspath refid="socialmap.module.bootclasspath"/>
+      <classpath refid="socialmap.module.production.classpath"/>
+      <src refid="socialmap.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.socialmap"/>
+    </javac2>
+    
+    <copy todir="${socialmap.output.dir}">
+      <fileset dir="${module.socialmap.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.socialmap.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.socialmap.tests" depends="register.custom.compilers,compile.module.socialmap.production" description="compile module SocialMap; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.socialmap" description="cleanup module">
+    <delete dir="${socialmap.output.dir}"/>
+    <delete dir="${socialmap.testoutput.dir}"/>
+  </target>
+</project>

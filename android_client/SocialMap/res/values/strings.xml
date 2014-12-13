@@ -3,7 +3,7 @@
     <string name="app_name">SocialMap</string>
 
     <!--base url of the server:  http://[ip]:[port]/[app]/-->
-    <string name="server_base_url">http://192.168.0.243:8080/social-map</string>
+    <string name="server_base_url">http://192.168.0.238:8080/social-map</string>
 
     <!--paths for eatch functions-->
     <!--reg device-->

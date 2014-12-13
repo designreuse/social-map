@@ -84,14 +84,20 @@ public class MainActivity extends Activity {
             googleMap.animateCamera(camUpd3);
             if (mapList != null){
                 for (int i = 0; i < mapList.size(); i++){
-                    LatLng latLng = new LatLng((Double)mapList.get(i).get("latitude"), (Double) mapList.get(i).get("longitude"));
+                    String lat = String.valueOf(mapList.get(i).get("latitude"));
+                    String lon = String.valueOf(mapList.get(i).get("longitude"));
+                    lat = lat.indexOf(".") < 0 ? lat : lat.replaceAll("0*$", "").replaceAll("\\.$", "");
+                    lon = lon.indexOf(".") < 0 ? lon : lon.replaceAll("0*$", "").replaceAll("\\.$", "");
+
+
+                    LatLng latLng = new LatLng(Double.valueOf(lat), Double.valueOf(lon));
                     CameraUpdate center= CameraUpdateFactory.newLatLng(latLng);
                     CameraUpdate zoom=CameraUpdateFactory.zoomTo(10f);
                     googleMap.moveCamera(center);
                     googleMap.animateCamera(zoom);
 
             Marker TP = googleMap.addMarker(new MarkerOptions().
-                    position(latLng).title((String) mapList.get(i).get("details")));
+                    position(latLng).title((String) mapList.get(i).get("name")));
                     TP.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
                 }
             }
