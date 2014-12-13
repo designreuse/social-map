@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -85,5 +86,31 @@ public class VehicleController {
         modelMap.addAttribute("vehicleGroupId", vehicleGroupId);
         modelMap.addAttribute("authenticationCode", authenticationCode);
         return "vehicle_mgt/auth_code";
+    }
+
+    @RequestMapping(value = "list", method = RequestMethod.GET)
+    public String viewVehicles(@RequestParam(value="vehicle_group_id", required = false) Long id,
+                               ModelMap modelMap) {
+
+        logger.info("view all vehicles, group id: {}.", id);
+
+        List<Vehicle> vehicleList = vehicleService.getAllVehicles();
+
+        if (id == null || id <= 0) {
+            modelMap.addAttribute("vehicleList", vehicleList);
+        } else {
+            List<Vehicle> vehicles = new ArrayList<>(vehicleList.size());
+
+            for (Vehicle vehicle : vehicleList) {
+                if (vehicle.getVehicleGroup().getId() == id)
+                    vehicles.add(vehicle);
+            }
+            modelMap.addAttribute("vehicleList", vehicles);
+            modelMap.addAttribute("selectedVehicleGroup", id);
+        }
+
+        List<VehicleGroup> vehicleGroups = vehicleGroupService.getAllGroups();
+        modelMap.addAttribute("vehicleGroups", vehicleGroups);
+        return "vehicle_mgt/view_all";
     }
 }
