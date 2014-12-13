@@ -13,6 +13,8 @@
 
     <jsp:attribute name="page_body">
 
+        <img src="<c:url value="/images/map.png" />" />
+
     </jsp:attribute>
 
 </t:wrapper>

@@ -16,6 +16,7 @@
         <link href="<c:url value="/css/bootstrap.min.css" />" rel="stylesheet">
         <link href="<c:url value="/css/ripples.min.css" />" rel="stylesheet">
         <link href="<c:url value="/css/material-wfont.min.css" />" rel="stylesheet">
+        <link href="<c:url value="/css/jquery.dropdown.css" />" rel="stylesheet">
         <link href="<c:url value="/css/sm-layout.css" />" rel="stylesheet">
 
         <jsp:invoke fragment="css"/>
@@ -49,6 +50,11 @@
             $(document).ready(function() {
                 $.material.init();
             });
+        </script>
+
+        <script src="<c:url value="/js/jquery.dropdown.js" />"></script>
+        <script>
+          $("select").dropdown();
         </script>
 
         <jsp:invoke fragment="js"/>

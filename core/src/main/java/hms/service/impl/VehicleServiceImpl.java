@@ -7,8 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -17,8 +16,8 @@ import java.util.Random;
 /**
  * Created by sadupa on 12/12/14.
  */
-@Service
 @Transactional
+@Service("vehicleService")
 public class VehicleServiceImpl implements VehicleService {
     @Autowired
     VehicleDao vehicleDao;
@@ -46,7 +45,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public boolean VerifyVehicle(Long groupId, String vehicleId, String verificationCode) {
         logger.info("Request received to verify vehicle");
-        Vehicle vehicle = vehicleDao.getVehicleByGroupAndCode(groupId, verificationCode, Vehicle.Status.ACTIVE);
+        Vehicle vehicle = vehicleDao.getVehicleByGroupAndCode(groupId, verificationCode, Vehicle.Status.PENDING);
         if (vehicle != null) {
             vehicle.setVehicleId(vehicleId);
             boolean result = vehicleDao.update(vehicle);
@@ -66,7 +65,7 @@ public class VehicleServiceImpl implements VehicleService {
             return false;
         }
         vehicle.setLongitude(longitude);
-        vehicle.setLongitude(latitude);
+        vehicle.setLatitude(latitude);
         vehicle.setLastUpdatedTime(time);
         logger.info("Location updated for vehicle {}", vehicleId);
         return vehicleDao.update(vehicle);
