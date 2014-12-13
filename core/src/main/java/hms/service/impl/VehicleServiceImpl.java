@@ -39,7 +39,7 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public Vehicle getVehicleById(String vehicleId) {
-        return null;
+        return vehicleDao.getVehicleById(vehicleId);
     }
 
     @Override
