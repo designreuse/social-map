@@ -10,7 +10,7 @@ import java.util.Locale;
  * Created by sadupa on 12/13/14.
  */
 public class DateUtils {
-    public static Date StringToDateTime(String date){
+    public static Date stringToDateTime(String date){
         DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
         Date formattedDate = null;
         try {
@@ -19,5 +19,11 @@ public class DateUtils {
             return null;
         }
         return formattedDate;
+    }
+
+    public static Date reduceMinutesFromDate(Date date, int minutes){
+        date.setTime(date.getTime() - (minutes * 60 * 1000));
+
+        return date;
     }
 }

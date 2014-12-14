@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -48,6 +49,17 @@ public class VehicleDaoImpl extends UniversalDaoImpl implements VehicleDao {
         List<Vehicle> result = (List<Vehicle>) session.createCriteria(Vehicle.class)
                 .add(Restrictions.eq("vehicleGroup.id", groupId))
                 .add(Restrictions.eq("vehicleStatus", status))
+                .list();
+        return result;
+    }
+
+    @Override
+    public List<Vehicle> getAllVehiclesByGroup(Long groupId, Vehicle.Status status, Date minLastUpdatedTime) {
+        Session session = getSession();
+        List<Vehicle> result = (List<Vehicle>) session.createCriteria(Vehicle.class)
+                .add(Restrictions.eq("vehicleGroup.id", groupId))
+                .add(Restrictions.eq("vehicleStatus", status))
+                .add(Restrictions.gt("lastUpdatedTime", minLastUpdatedTime))
                 .list();
         return result;
     }

@@ -4,7 +4,7 @@ curl -i -H "Content-type: application/json" -X POST -d '{"group-id":1,"code":"c0
 {"responseContext":"Vehicle registration success"}
 
 
-/*send vehicle location by app(this is done my background process)*/
+/*send vehicle location by app(this is done by background process)*/
 curl -i -H "Content-type: application/json" -X POST -d '{"vehicle-id":"GT65839","latitude":"12.34","longitude":"32.34","time":"2014-12-14 01:20:23"}' http://localhost:8080/social-map/rest/request/vehicle/current/location
 
 {"responseContext":"Vehicle current location updated"}
@@ -17,6 +17,6 @@ curl -i -H "Content-type: application/json" -X POST -d '{}' http://localhost:808
 
 
 /*locate vehicle*/
-curl -i -H "Content-type: application/json" -X POST -d '{"latitude":"12.34","longitude":"32.34"}' http://localhost:8080/social-map/rest/request/user/locate/vehicle
+curl -i -H "Content-type: application/json" -X POST -d '{"group-id":1}' http://localhost:8080/social-map/rest/request/user/locate/vehicle
 
 {"responseContext":{"id":null,"name":null,"details":null,"longitude":null,"latitude":null,"vehicleGroup":null}}

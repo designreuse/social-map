@@ -14,10 +14,8 @@ package hms;/*   File Name - RequestControler
 
 import hms.model.Vehicle;
 import hms.model.VehicleGroup;
-import hms.service.UserService;
 import hms.service.VehicleGroupService;
 import hms.service.VehicleService;
-import hms.util.DateUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +39,6 @@ import java.util.Map;
 @RequestMapping("/request")
 public class RequestController {
     @Autowired
-    private UserService userService;
-    @Autowired
     private VehicleGroupService vehicleGroupService;
     @Autowired
     private VehicleService vehicleService;
@@ -53,10 +49,10 @@ public class RequestController {
     public
     @ResponseBody
     Map<String, Object> registerVehicle(@RequestBody Map<String, Object> request) {
-        Map<String, Object> response = new HashMap<String, Object>();
+        Map<String, Object> response = new HashMap<>();
         try {
             logger.info("Register vehicle: {}", request);
-            boolean isVerified = vehicleService.VerifyVehicle(Long.parseLong(request.get("group-id").toString()), request.get("vehicle-id").toString(), request.get("code").toString());
+            boolean isVerified = vehicleService.verifyVehicle(Long.parseLong(request.get("group-id").toString()), request.get("vehicle-id").toString(), request.get("code").toString());
 
             if (isVerified) {
                 response.put("responseContext", ResponseStatus.SUCCESS);
@@ -75,7 +71,7 @@ public class RequestController {
     public
     @ResponseBody
     Map<String, Object> currentLocation(@RequestBody Map<String, Object> request) {
-        Map response = new HashMap();
+        Map<String, Object> response = new HashMap<>();
         try {
             logger.info("Update current vehicle location: {}", request);
             boolean result = vehicleService.updateVehicleLocation(request.get("vehicle-id").toString(), new BigDecimal(request.get("longitude").toString()), new BigDecimal(request.get("latitude").toString()), new Date());
@@ -97,7 +93,7 @@ public class RequestController {
     public
     @ResponseBody
     Map<String, Object> searchGroup(@RequestBody Map<String, Object> request) {
-        Map response = new HashMap();
+        Map<String, Object> response = new HashMap<>();
         try {
             logger.info("Get all groups: {}", request);
             List<VehicleGroup> vehicleGroups = vehicleGroupService.getAllGroups();
@@ -118,7 +114,7 @@ public class RequestController {
     public
     @ResponseBody
     Map<String, Object> locateVehicle(@RequestBody Map<String, Object> request) {
-        Map response = new HashMap();
+        Map<String, Object> response = new HashMap<>();
         try {
             logger.info("Locate vehicles: {}", request);
             List<Vehicle> vehicleList = vehicleService.getActiveVehiclesByGroup(Long.parseLong(request.get("group-id").toString()));

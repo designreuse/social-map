@@ -3,6 +3,7 @@ package hms.dao;
 
 import hms.model.Vehicle;
 
+import java.util.Date;
 import java.util.List;
 
 public interface VehicleDao {
@@ -16,6 +17,8 @@ public interface VehicleDao {
     Vehicle getVehicleByGroupAndCode(Long groupId, String code, Vehicle.Status status);
 
     List<Vehicle> getAllVehiclesByGroup(Long groupId, Vehicle.Status status);
+
+    List<Vehicle> getAllVehiclesByGroup(Long groupId, Vehicle.Status status, Date minLastUpdatedTime);
 
     List<Vehicle> getAllVehicles();
 
