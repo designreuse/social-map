@@ -1,39 +1,22 @@
 /*register vehicle*/
 curl -i -H "Content-type: application/json" -X POST -d '{"group-id":1,"code":"c001","vehicle-id":"gh7849030hdfak"}' http://localhost:8080/social-map/rest/request/vehicle/register
-Server: Apache-Coyote/1.1
-Content-Type: application/json;charset=UTF-8
-Transfer-Encoding: chunked
-Date: Fri, 12 Dec 2014 06:38:59 GMT
 
 {"responseContext":"Vehicle registration success"}
 
+
 /*send vehicle location by app(this is done my background process)*/
 curl -i -H "Content-type: application/json" -X POST -d '{"vehicle-id":"GT65839","latitude":"12.34","longitude":"32.34","time":"2014-12-14 01:20:23"}' http://localhost:8080/social-map/rest/request/vehicle/current/location
-HTTP/1.1 200 OK
-Server: Apache-Coyote/1.1
-Content-Type: application/json;charset=UTF-8
-Transfer-Encoding: chunked
-Date: Fri, 12 Dec 2014 06:41:50 GMT
 
 {"responseContext":"Vehicle current location updated"}
 
+
 /*get all groups*/
 curl -i -H "Content-type: application/json" -X POST -d '{}' http://localhost:8080/social-map/rest/request/user/get/all/groups
-HTTP/1.1 200 OK
-Server: Apache-Coyote/1.1
-Content-Type: application/json;charset=UTF-8
-Transfer-Encoding: chunked
-Date: Fri, 12 Dec 2014 07:04:24 GMT
 
 {"responseContext":[{"id":1,"name":"zz","details":"desc","start":null,"end":null,"vehicles":null},{"id":2,"name":"aa","details":"desc2","start":null,"end":null,"vehicles":null}]}
 
 
 /*locate vehicle*/
 curl -i -H "Content-type: application/json" -X POST -d '{"latitude":"12.34","longitude":"32.34"}' http://localhost:8080/social-map/rest/request/user/locate/vehicle
-HTTP/1.1 200 OK
-Server: Apache-Coyote/1.1
-Content-Type: application/json;charset=UTF-8
-Transfer-Encoding: chunked
-Date: Fri, 12 Dec 2014 07:05:45 GMT
 
 {"responseContext":{"id":null,"name":null,"details":null,"longitude":null,"latitude":null,"vehicleGroup":null}}
