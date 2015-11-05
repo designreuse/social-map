@@ -1,10 +1,12 @@
 #!/bin/sh
-projectPath=/home/sadupa/projects/winter-code-fest/social-map
-tomcatPath=/usr/local/apache-tomcat-6.0.37
+# This script can be used to automatically build and deploy this project
+# Add following lines to your ~/.bash_profile
+# export TOMCAT_PATH=path to tomcat without ending slash
+# export SOCIAL_MAP_PATH=path to project without ending slash
 
-sh $tomcatPath/bin/catalina.sh stop
-cd $projectPath
+sh $TOMCAT_PATH/bin/catalina.sh stop
+cd $SOCIAL_MAP_PATH
 mvn clean install -DskipTests -o
-rm -r $tomcatPath/webapps/social-map*
-cp rest/target/social-map.war $tomcatPath/webapps
-sh $tomcatPath/bin/catalina.sh jpda run
+rm -r $TOMCAT_PATH/webapps/social-map*
+cp rest/target/social-map.war $TOMCAT_PATH/webapps
+sh $TOMCAT_PATH/bin/catalina.sh jpda run
