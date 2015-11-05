@@ -9,4 +9,5 @@ cd $SOCIAL_MAP_PATH
 mvn clean install -DskipTests -o
 rm -r $TOMCAT_PATH/webapps/social-map*
 cp rest/target/social-map.war $TOMCAT_PATH/webapps
+cp admin/target/social-map-admin.war $TOMCAT_PATH/webapps
 sh $TOMCAT_PATH/bin/catalina.sh jpda run
