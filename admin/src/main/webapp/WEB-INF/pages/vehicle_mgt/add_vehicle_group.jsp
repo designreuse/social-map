@@ -32,7 +32,7 @@
             <div class="form-group">
                 <label for="input-name" class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
-                    <form:input type="text" class="form-control" id="input-name" path="name" placeholder="Name" required="true"/>
+                    <form:input type="text" class="form-control" id="input-name" path="name" placeholder="Name" maxlength="100" required="true"/>
                 </div>
             </div>
             <div class="form-group">

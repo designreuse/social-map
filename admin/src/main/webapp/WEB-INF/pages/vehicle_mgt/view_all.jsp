@@ -16,7 +16,7 @@
                 <label for="input-vehicle-group" class="col-sm-5 control-label">Vehicle Group</label>
                 <div class="col-sm-7">
                     <select class="form-control" id="input-vehicle-group" name="vehicle_group_id">
-                        <form:option value="0" label=""/>
+                        <option value="0">All</option>
                         <c:forEach items="${vehicleGroups}" var="grp" varStatus="status">
 
                             <option value="${grp.id}"

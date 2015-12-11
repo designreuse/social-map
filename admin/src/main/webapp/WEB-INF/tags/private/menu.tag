@@ -24,6 +24,7 @@
           <ul class="dropdown-menu" role="menu">
             <li><a href="<c:url value="/vehicle/add"/>">Add</a></li>
             <li><a href="<c:url value="/vehicle/list"/>">List</a></li>
+            <li><a href="<c:url value="/vehicle/map"/>">Map</a></li>
           </ul>
         </li>
       </ul>
