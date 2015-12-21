@@ -2,6 +2,7 @@ package hms.dao.impl;
 
 import hms.dao.VehicleDao;
 import hms.model.Vehicle;
+import hms.model.VehicleGroup;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -23,6 +24,17 @@ public class VehicleDaoImpl extends UniversalDaoImpl implements VehicleDao {
         return super.update(vehicle);
     }
 
+
+
+    @Override
+    public Vehicle getVehicleById(Long id) {
+        Session session = getSession();
+        Vehicle result = (Vehicle) session.createCriteria(Vehicle.class)
+                .add(Restrictions.eq("id", id))
+                .uniqueResult();
+        return result;
+    }
+
     @Override
     public Vehicle getVehicleById(String vehicleId) {
         Session session = getSession();
@@ -31,6 +43,7 @@ public class VehicleDaoImpl extends UniversalDaoImpl implements VehicleDao {
                 .uniqueResult();
         return result;
     }
+
 
     @Override
     public Vehicle getVehicleByGroupAndCode(Long groupId, String code, Vehicle.Status status) {
@@ -62,13 +75,27 @@ public class VehicleDaoImpl extends UniversalDaoImpl implements VehicleDao {
                 .add(Restrictions.gt("lastUpdatedTime", minLastUpdatedTime))
                 .list();
         return result;
+
     }
 
     @Override
     public List<Vehicle> getAllVehicles() {
         Session session = getSession();
         List<Vehicle> result = (List<Vehicle>) session.createCriteria(Vehicle.class)
+                .add(Restrictions.ne("vehicleStatus", Vehicle.Status.REMOVED))
                 .list();
         return result;
     }
+
+   // @Override
+    public List<Vehicle> getAllVehiclegroups() {
+        Session session = getSession();
+        List<Vehicle> result = (List<Vehicle>) session.createCriteria(Vehicle.class)
+                .list();
+        return result;
+    }
+
+
+
+
 }

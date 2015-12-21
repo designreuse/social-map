@@ -14,5 +14,7 @@ public interface VehicleGroupDao {
 
     List<VehicleGroup> getAllGroups();
 
+    boolean update(VehicleGroup vehiclegroup);
+
     VehicleGroup findVehicleGroupById(Long vehicleGroupId);
 }

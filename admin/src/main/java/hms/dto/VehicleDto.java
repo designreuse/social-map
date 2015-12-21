@@ -34,4 +34,6 @@ public class VehicleDto {
     public void setVehicleGroupId(Long vehicleGroupId) {
         this.vehicleGroupId = vehicleGroupId;
     }
+
+
 }

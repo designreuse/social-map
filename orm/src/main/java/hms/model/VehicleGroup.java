@@ -13,6 +13,12 @@ import java.util.Set;
 @Entity
 @Table(name = "vehicle_group")
 public class VehicleGroup implements java.io.Serializable {
+
+    public enum Status {
+        ACTIVE,
+        REMOVED;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -30,6 +36,10 @@ public class VehicleGroup implements java.io.Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "vehicleGroup", cascade = CascadeType.ALL)
     private Set<Vehicle> vehicles = new HashSet<Vehicle>();
     ;
+
+    @Column(name = "vehicleGroup_status")
+    @Enumerated(EnumType.STRING)
+    private Status vehicleGroupStatus;
 
     public Long getId() {
         return id;
@@ -77,5 +87,14 @@ public class VehicleGroup implements java.io.Serializable {
 
     public void setVehicles(Set<Vehicle> vehicles) {
         this.vehicles = vehicles;
+    }
+
+    public Status getVehiclGroupeStatus() {
+        return vehicleGroupStatus;
+    }
+
+    public void setVehicleGroupStatus(Status vehicleGroupStatus) {
+
+        this.vehicleGroupStatus = vehicleGroupStatus;
     }
 }

@@ -2,6 +2,7 @@ package hms.service.impl;
 
 import hms.dao.VehicleDao;
 import hms.model.Vehicle;
+import hms.model.VehicleGroup;
 import hms.service.VehicleService;
 import hms.util.DateUtils;
 import org.apache.logging.log4j.LogManager;
@@ -20,7 +21,7 @@ import java.util.Random;
  */
 @Transactional
 @Service("vehicleService")
-public class VehicleServiceImpl implements VehicleService {
+public class VehicleServiceImpl implements VehicleService{
     @Autowired
     VehicleDao vehicleDao;
 
@@ -82,7 +83,39 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
+    public int getNumberOfActiveVehiclesByGroup(Long groupId) {
+        Date minLastUpdatedTime = DateUtils.reduceMinutesFromDate(new Date(), Integer.valueOf(maxLastUpdatedMinutes));
+        List<Vehicle> vehicleList = vehicleDao.getAllVehiclesByGroup(groupId, Vehicle.Status.ACTIVE);
+        List<Vehicle> vehicleList1 = vehicleDao.getAllVehiclesByGroup(groupId, Vehicle.Status.PENDING);
+
+        System.out.println(vehicleList);
+        System.out.println(vehicleList.size());
+        vehicleList.addAll(vehicleList1);
+        return vehicleList.size();
+
+    }
+
+    @Override
     public List<Vehicle> getAllVehicles() {
         return vehicleDao.getAllVehicles();
     }
+
+
+   @Override
+    public Vehicle updateVehicle(Vehicle vehicle) {
+
+        boolean result = vehicleDao.update(vehicle);
+        return vehicle;
+
+    }
+
+    @Override
+    public void remove(Long id){
+        Vehicle vehicle = vehicleDao.getVehicleById(id);
+        vehicle.setVehicleStatus(Vehicle.Status.REMOVED);
+        vehicleDao.update(vehicle);
+
+    }
+
+
 }

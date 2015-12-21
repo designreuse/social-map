@@ -32,7 +32,7 @@
             <div class="form-group">
                 <label for="input-name" class="col-sm-2 control-label">Name</label>
                 <div class="col-sm-10">
-                    <form:input type="text" class="form-control" id="input-name" path="name" placeholder="Name" required="true"/>
+                    <form:input type="text" class="form-control" id="input-name" path="name" placeholder="Name" maxlength="100" required="true"/>
                 </div>
             </div>
             <div class="form-group">
@@ -53,6 +53,10 @@
                     <span id="start-error" class="text-danger" hidden="true">Invalid location.</span>
                 </div>
             </div>
+
+
+
+
             <div class="form-group">
                 <label for="input-end" class="col-sm-2 control-label">End</label>
                 <div class="col-sm-10">
@@ -65,6 +69,8 @@
                     <span id="end-error" class="text-danger" hidden="true">Invalid location.</span>
                 </div>
             </div>
+
+
 
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">

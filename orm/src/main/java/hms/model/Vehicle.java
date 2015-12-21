@@ -28,7 +28,8 @@ public class Vehicle implements java.io.Serializable{
 
     public enum Status {
         ACTIVE,
-        PENDING;
+        PENDING,
+        REMOVED;
     }
 
     @Id

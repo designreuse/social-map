@@ -26,10 +26,14 @@ public class VehicleGroupDaoImpl extends UniversalDaoImpl implements VehicleGrou
         Session session = getSession();
         List<VehicleGroup> result = session.createCriteria(VehicleGroup.class)
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .add(Restrictions.ne("vehicleGroupStatus", VehicleGroup.Status.REMOVED))
                 .list();
         return result;
     }
-
+    @Override
+    public boolean update(VehicleGroup vehiclegroup) {
+        return super.update(vehiclegroup);
+    }
     @Override
     public VehicleGroup findVehicleGroupById(Long vehicleGroupId) {
         Session session = getSession();
@@ -38,4 +42,5 @@ public class VehicleGroupDaoImpl extends UniversalDaoImpl implements VehicleGrou
                 .uniqueResult();
         return result;
     }
+
 }

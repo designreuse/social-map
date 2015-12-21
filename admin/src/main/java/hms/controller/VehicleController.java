@@ -1,6 +1,8 @@
 package hms.controller;
 
+import hms.dao.VehicleDao;
 import hms.dto.VehicleDto;
+import hms.model.Location;
 import hms.model.Vehicle;
 import hms.model.VehicleGroup;
 import hms.service.VehicleGroupService;
@@ -10,10 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
@@ -80,7 +79,6 @@ public class VehicleController {
     public String vehicleAuthCodeView(@RequestParam("vehicle_group_id") Long vehicleGroupId,
                                       @RequestParam("authentication_code") String authenticationCode,
                                       ModelMap modelMap) {
-//        logger.info("vehicle authcode {} {}", vehicleGroupId, authenticationCode);
         logger.info("auth view");
 
         modelMap.addAttribute("vehicleGroupId", vehicleGroupId);
@@ -113,4 +111,49 @@ public class VehicleController {
         modelMap.addAttribute("vehicleGroups", vehicleGroups);
         return "vehicle_mgt/view_all";
     }
+
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    public String vehicleUpdateAction(Vehicle vehicle,
+                                   final RedirectAttributes redirectAttributes) {
+
+        logger.info("update vehicle",vehicle);
+
+
+        vehicleService.updateVehicle(vehicle);
+        return "redirect:list";
+
+    }
+
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String vehicleRemoveAction(@PathVariable("id") Long id, final RedirectAttributes redirectAttributes) {
+
+
+    vehicleService.remove(id);
+
+        redirectAttributes.addFlashAttribute("VehicleDeleted", true);
+        //return "vehicle_mgt/view_all";
+        return "redirect:/vehicle/list";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

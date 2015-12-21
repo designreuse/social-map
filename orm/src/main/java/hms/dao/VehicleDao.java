@@ -14,6 +14,9 @@ public interface VehicleDao {
 
     Vehicle getVehicleById(String vehicleId);
 
+    Vehicle getVehicleById(Long id);
+
+
     Vehicle getVehicleByGroupAndCode(Long groupId, String code, Vehicle.Status status);
 
     List<Vehicle> getAllVehiclesByGroup(Long groupId, Vehicle.Status status);
@@ -21,5 +24,16 @@ public interface VehicleDao {
     List<Vehicle> getAllVehiclesByGroup(Long groupId, Vehicle.Status status, Date minLastUpdatedTime);
 
     List<Vehicle> getAllVehicles();
+
+    List<Vehicle> getAllVehiclegroups();
+
+   // int getVehiclecount();
+
+    //Vehicle findVehicleGroupById(Long vehicleId);
+
+    //int getNumberOfActiveVehiclesByGroup(Long groupId);
+
+
+
 
 }
