@@ -24,7 +24,6 @@
           <ul class="dropdown-menu" role="menu">
             <li><a href="<c:url value="/vehicle/add"/>">Add</a></li>
             <li><a href="<c:url value="/vehicle/list"/>">List</a></li>
-           <%-- <li><a href="<c:url value="/vehicle/update"/>">Update vehicle</a></li>--%>
             <li><a href="<c:url value="/vehicle/map"/>">Map</a></li>
           </ul>
         </li>
@@ -34,6 +33,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Vehicle Group <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="<c:url value="/vehiclegroup/add"/>">Add</a></li>
+            <li><a href="<c:url value="/vehiclegroup/list"/>">List</a></li>
           </ul>
         </li>
       </ul>

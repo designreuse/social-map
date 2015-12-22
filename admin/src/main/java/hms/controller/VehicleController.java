@@ -88,7 +88,7 @@ public class VehicleController {
     }
 
     @RequestMapping(value = "list", method = RequestMethod.GET)
-    public String viewVehicles(@RequestParam(value="vehicle_group_id", required = false) Long id,
+    public String viewVehicles(@RequestParam(value = "vehicle_group_id", required = false) Long id,
                                ModelMap modelMap) {
 
         logger.info("view all vehicles, group id: {}.", id);
@@ -115,9 +115,9 @@ public class VehicleController {
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
     public String vehicleUpdateAction(Vehicle vehicle,
-                                   final RedirectAttributes redirectAttributes) {
+                                      final RedirectAttributes redirectAttributes) {
 
-        logger.info("update vehicle",vehicle);
+        logger.info("update vehicle", vehicle);
 
 
         vehicleService.updateVehicle(vehicle);
@@ -129,46 +129,24 @@ public class VehicleController {
     public String vehicleRemoveAction(@PathVariable("id") Long id, final RedirectAttributes redirectAttributes) {
 
 
-    vehicleService.remove(id);
+        vehicleService.remove(id);
 
         redirectAttributes.addFlashAttribute("VehicleDeleted", true);
         //return "vehicle_mgt/view_all";
         return "redirect:/vehicle/list";
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*    @RequestMapping(value = "map", method = RequestMethod.GET)
-    public String map(ModelMap modelMap) {
-        List<Vehicle> vehicleList = vehicleService.getAllVehicles();
-        modelMap.addAttribute("vehicleList", vehicleList);
-        List<VehicleGroup> vehicleGroups = vehicleGroupService.getAllGroups();
-        modelMap.addAttribute("vehicleGroups", vehicleGroups);
-        return "vehicle_mgt/map";
-    }*/
+    /*    @RequestMapping(value = "map", method = RequestMethod.GET)
+        public String map(ModelMap modelMap) {
+            List<Vehicle> vehicleList = vehicleService.getAllVehicles();
+            modelMap.addAttribute("vehicleList", vehicleList);
+            List<VehicleGroup> vehicleGroups = vehicleGroupService.getAllGroups();
+            modelMap.addAttribute("vehicleGroups", vehicleGroups);
+            return "vehicle_mgt/map";
+        }*/
     @RequestMapping(value = "map", method = RequestMethod.GET)
-    public String map(@RequestParam(value="vehicle_group_id", required = false) Long id,
-                               ModelMap modelMap) {
+    public String map(@RequestParam(value = "vehicle_group_id", required = false) Long id,
+                      ModelMap modelMap) {
 
         logger.info("view all vehicles, group id: {}.", id);
 
