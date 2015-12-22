@@ -32,6 +32,7 @@ import com.winter.codefest.SocialMap.util.HTTPRequest;
 
 import org.json.JSONException;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -96,8 +97,8 @@ public class MainActivity extends Activity {
                     googleMap.moveCamera(center);
                     googleMap.animateCamera(zoom);
 
-            Marker TP = googleMap.addMarker(new MarkerOptions().
-                    position(latLng).title((String) mapList.get(i).get("name")));
+                    Marker TP = googleMap.addMarker(new MarkerOptions().
+                            position(latLng).title((String) mapList.get(i).get("name")));
                     TP.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.bus));
                 }
             }
@@ -129,7 +130,7 @@ public class MainActivity extends Activity {
                 startRegisteractivity();
                 return true;
             case R.id.help:
-//                showHelp();
+                showHelp();
                 return true;
             case R.id.tracker:
                 showTrackerPage();
@@ -137,6 +138,11 @@ public class MainActivity extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showHelp() {
+        Intent intent = new Intent(this, HelpActivity.class);
+        startActivity(intent);
     }
 
     private void showTrackerPage() {
@@ -198,7 +204,7 @@ public class MainActivity extends Activity {
                     }else{
                         Toast.makeText(MainActivity.this,
                                 MainActivity.this.getString(R.string.err_connection_error),
-                                 Toast.LENGTH_LONG).show();
+                                Toast.LENGTH_LONG).show();
                     }
                 }
             }.execute(post);
@@ -263,42 +269,49 @@ public class MainActivity extends Activity {
     public Dialog onCreateDialogSingleChoice(List<Map> list) {
         final List<Integer> ids = new ArrayList<Integer>();
         //Initialize the Alert Dialog
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         //Source of the data in the DIalog
+
         String[] arr = new String[list.size()];
-        for (int i=0;i<list.size();i++){
+
+        for (int i=0;i<(list.size());i++){
             arr[i] = (String)list.get(i).get("name");
             ids.add((Integer) list.get(i).get("id"));
         }
-                builder.setTitle("Select Route")
-                        .setSingleChoiceItems(arr, 1, new DialogInterface.OnClickListener() {
 
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        })
+        builder.setTitle("Select Route")
+                .setSingleChoiceItems(arr, 0, new DialogInterface.OnClickListener() {
 
-                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                int selectedPosition = ((AlertDialog)dialog).getListView().getCheckedItemPosition();
-                                loadVehicles(ids.get(selectedPosition));
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
 
-                            }
-                        });
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        int selectedPosition = ((AlertDialog) dialog).getListView().getCheckedItemPosition();
+                        loadVehicles(ids.get(selectedPosition));
 
-                return builder.create();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+
+        return builder.create();
     }
+
 
     private List<String> getGroupList(Map<String, Object> response) {
         List<String> groups = new ArrayList<String>();
         //TODO make the list
         return groups;
     }
+
+
 
 }

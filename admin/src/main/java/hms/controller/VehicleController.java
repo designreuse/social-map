@@ -79,6 +79,7 @@ public class VehicleController {
     public String vehicleAuthCodeView(@RequestParam("vehicle_group_id") Long vehicleGroupId,
                                       @RequestParam("authentication_code") String authenticationCode,
                                       ModelMap modelMap) {
+//        logger.info("vehicle authcode {} {}", vehicleGroupId, authenticationCode);
         logger.info("auth view");
 
         modelMap.addAttribute("vehicleGroupId", vehicleGroupId);
@@ -155,5 +156,40 @@ public class VehicleController {
 
 
 
+
+
+/*    @RequestMapping(value = "map", method = RequestMethod.GET)
+    public String map(ModelMap modelMap) {
+        List<Vehicle> vehicleList = vehicleService.getAllVehicles();
+        modelMap.addAttribute("vehicleList", vehicleList);
+        List<VehicleGroup> vehicleGroups = vehicleGroupService.getAllGroups();
+        modelMap.addAttribute("vehicleGroups", vehicleGroups);
+        return "vehicle_mgt/map";
+    }*/
+    @RequestMapping(value = "map", method = RequestMethod.GET)
+    public String map(@RequestParam(value="vehicle_group_id", required = false) Long id,
+                               ModelMap modelMap) {
+
+        logger.info("view all vehicles, group id: {}.", id);
+
+        List<Vehicle> vehicleList = vehicleService.getAllVehicles();
+
+        if (id == null || id <= 0) {
+            modelMap.addAttribute("vehicleList", vehicleList);
+        } else {
+            List<Vehicle> vehicles = new ArrayList<>(vehicleList.size());
+
+            for (Vehicle vehicle : vehicleList) {
+                if (vehicle.getVehicleGroup().getId() == id)
+                    vehicles.add(vehicle);
+            }
+            modelMap.addAttribute("vehicleList", vehicles);
+            modelMap.addAttribute("selectedVehicleGroup", id);
+        }
+
+        List<VehicleGroup> vehicleGroups = vehicleGroupService.getAllGroups();
+        modelMap.addAttribute("vehicleGroups", vehicleGroups);
+        return "vehicle_mgt/map";
+    }
 
 }
