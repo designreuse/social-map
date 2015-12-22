@@ -1,6 +1,8 @@
 package hms.service.impl;
 
 import hms.dao.VehicleGroupDao;
+import hms.dao.VehicleDao;
+import hms.model.Vehicle;
 import hms.model.VehicleGroup;
 import hms.service.VehicleGroupService;
 import org.apache.logging.log4j.LogManager;
@@ -42,4 +44,25 @@ public class VehicleGroupServiceImpl implements VehicleGroupService {
     public VehicleGroup findVehicleGroupById(Long vehicleGroupId) {
         return vehicleGroupDao.findVehicleGroupById(vehicleGroupId);
     }
+
+
+
+    @Override
+    public void updateVehiclegroup(VehicleGroup vehiclegroup) {
+
+        boolean result = vehicleGroupDao.update(vehiclegroup);
+      //  return vehiclegroup;
+
+    }
+
+    @Override
+    public void remove(Long id){
+
+        VehicleGroup vehicleGroup = vehicleGroupDao.findVehicleGroupById(id);
+        vehicleGroup.setVehicleGroupStatus(VehicleGroup.Status.REMOVED);
+        vehicleGroupDao.update(vehicleGroup);
+
+
+    }
+
 }

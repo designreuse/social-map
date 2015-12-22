@@ -13,5 +13,10 @@ public interface VehicleGroupService {
     boolean addVehicleGroup(VehicleGroup vehicleGroup);
     List<VehicleGroup> getAllGroups();
 
+    void updateVehiclegroup(VehicleGroup vehiclegroup);
+
     VehicleGroup findVehicleGroupById(Long vehicleGroupId);
+
+    void remove(Long id);
+
 }
